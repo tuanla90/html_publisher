@@ -201,15 +201,15 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-1">
-                    Cài đặt môi trường Python (Jupyter/Colab), cài đặt thư viện <code>google-cloud-bigquery</code> và xác thực tài khoản service account.
+                    Cài đặt môi trường Python (Jupyter/Colab), cài đặt thư viện 'google-cloud-bigquery' và xác thực tài khoản service account.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-2">
-                    Viết câu truy vấn SQL đầu tiên trên BigQuery Console: <code>SELECT * FROM dataset.table LIMIT 100</code> để xem cấu trúc dữ liệu CASA Churn.
+                    Viết câu truy vấn SQL đầu tiên trên BigQuery Console: 'SELECT * FROM dataset.table LIMIT 100' để xem cấu trúc dữ liệu CASA Churn.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-3">
-                    Load kết quả truy vấn vào Python DataFrame bằng <code>client.query(sql).to_dataframe()</code>. Kiểm tra <code>df.shape</code>, <code>df.info()</code>, <code>df.dtypes</code>.
+                    Load kết quả truy vấn vào Python DataFrame bằng 'client.query(sql).to_dataframe()'. Kiểm tra 'df.shape', 'df.info()', 'df.dtypes'.
                   </li>
                 </ul>
               </div>
@@ -219,15 +219,15 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-1">
-                    Kiểm tra tỷ lệ missing values cho từng cột bằng <code>df.isnull().mean()</code>. Đánh dấu các cột có tỷ lệ khuyết &gt;30% cần xử lý đặc biệt.
+                    Kiểm tra tỷ lệ missing values cho từng cột bằng 'df.isnull().mean()'. Đánh dấu các cột có tỷ lệ khuyết &gt;30% cần xử lý đặc biệt.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-2">
-                    Sử dụng <code>df.describe()</code> để đọc phân phối số liệu. Đối chiếu với Data Dictionary do Mentor cung cấp để hiểu ý nghĩa nghiệp vụ từng cột.
+                    Sử dụng 'df.describe()' để đọc phân phối số liệu. Đối chiếu với Data Dictionary do Mentor cung cấp để hiểu ý nghĩa nghiệp vụ từng cột.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-3">
-                    Kiểm tra bản ghi trùng lặp <code>df.duplicated().sum()</code>, phân phối nhãn target (Churn vs Non-Churn) bằng <code>value_counts(normalize=True)</code>.
+                    Kiểm tra bản ghi trùng lặp 'df.duplicated().sum()', phân phối nhãn target (Churn vs Non-Churn) bằng 'value_counts(normalize=True)'.
                   </li>
                 </ul>
               </div>
@@ -289,7 +289,7 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w2-d1-1">
-                    Tạo dashboard tổng hợp bằng <code>matplotlib.pyplot.subplots()</code> hoặc <code>plotly</code>: Tỷ lệ Churn tổng thể, phân bổ theo Hạng thẻ, phân bổ theo Khu vực.
+                    Tạo dashboard tổng hợp bằng 'matplotlib.pyplot.subplots()' hoặc 'plotly': Tỷ lệ Churn tổng thể, phân bổ theo Hạng thẻ, phân bổ theo Khu vực.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w2-d1-2">
@@ -307,7 +307,7 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w2-d2-1">
-                    Sử dụng <code>groupby()</code> tính Churn Rate theo từng segment (Giới tính ỗ Hạng thẻ, Khu vực & Số sản phẩm). Vẽ biểu đồ cột chồng (stacked bar).
+                    Sử dụng 'groupby()' tính Churn Rate theo từng segment (Giới tính, Hạng thẻ, Khu vực & Số sản phẩm). Vẽ biểu đồ cột chồng (stacked bar).
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w2-d2-2">
@@ -446,7 +446,7 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w3-d3-1">
-                    Xử lý missing values (<code>SimpleImputer</code>), mã hóa biến phân loại (<code>OneHotEncoder</code>/<code>LabelEncoder</code>), chuẩn hóa biến số (<code>StandardScaler</code>).
+                    Xử lý missing values ('SimpleImputer'), mã hóa biến phân loại ('OneHotEncoder'/'LabelEncoder'), chuẩn hóa biến số ('StandardScaler').
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w3-d3-2">
@@ -494,7 +494,7 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w4-d1-1">
-                    Chia tập dữ liệu Train/Test (80/20) với <code>train_test_split(stratify=y)</code>. Giải thích tại sao cần stratify khi dữ liệu mất cân bằng.
+                    Chia tập dữ liệu Train/Test (80/20) với 'train_test_split(stratify=y)'. Giải thích tại sao cần stratify khi dữ liệu mất cân bằng.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w4-d1-2">
@@ -512,7 +512,7 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w4-d2-1">
-                    Trích xuất Feature Importance (<code>model.feature_importances_</code> hoặc <code>model.coef_</code>). Vẽ biểu đồ horizontal bar chart Top 10 features quan trọng nhất.
+                    Trích xuất Feature Importance ('model.feature_importances_' hoặc 'model.coef_'). Vẽ biểu đồ horizontal bar chart Top 10 features quan trọng nhất.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w4-d2-2">
