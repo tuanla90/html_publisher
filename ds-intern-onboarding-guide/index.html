@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NCB - Khung Đào Tạo Intern Data Science (1 Tháng)</title>
+  <!-- Google Fonts: Outfit for Headings, Inter for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       SIDEBAR NAVIGATION
+       ========================================== -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-container">
+        <div class="logo-text">NCB <span>Intern DS</span></div>
+      </div>
+      <nav>
+        <ul class="menu-list">
+          <li class="menu-item active" data-tab="overview">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Tổng quan & Tiến độ
+          </li>
+          <li class="menu-item" data-tab="roadmap">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            Lộ trình 4 Tuần
+          </li>
+          <li class="menu-item" data-tab="business">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            Nghiệp vụ & Data Schema
+          </li>
+          <li class="menu-item" data-tab="code">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            Thư viện Mã mẫu
+          </li>
+          <li class="menu-item" data-tab="evaluation">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            Đánh giá & Mentor
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="theme-toggle-btn" title="Đổi chế ốộ Sáng/Tối">
+        <!-- Sun icon (shows in dark) -->
+        <svg id="theme-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:block;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg>
+        <!-- Moon icon (shows in light) -->
+        <svg id="theme-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <div style="font-size: 11px; opacity: 0.6;">v1.1 &copy; 2026 NCB Bank</div>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== -->
+  <div class="main-wrapper">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="top-title" id="page-title">Tổng quan & Tiến ốộ</div>
+      <div class="progress-widget">
+        <div class="progress-text" id="progress-percent-label">Tiến ốộ: 0%</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-ratio">0/36 Nhiệm vụ</div>
+      </div>
+    </header>
+
+    <!-- Scrollable content area -->
+    <main class="content-area">
+
+      <!-- ==========================================
+           TAB: OVERVIEW
+           ========================================== -->
+      <section class="tab-content active" id="tab-overview">
+        <div class="hero-banner">
+          <div class="hero-info">
+            <span class="hero-badge">Existing Use Case · CASA/Credit Card Churn · BigQuery → Python → Model</span>
+            <h1 class="hero-title">Onboarding Data Science Plan</h1>
+            <p class="hero-desc">Bản cẩm nang đào tạo 1 tháng. Intern sẽ làm việc trực tiếp trên use case Churn dự đoán có sẵn (CASA/Credit Card) của NCB, truy vấn dữ liệu từ BigQuery, xây dashboard phân tích bằng Python, và thực hành Feature Shortlisting + Model Development trên danh sách features có sẵn.</p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon-wrapper" style="background-color: var(--ncb-blue-light); color: var(--ncb-blue);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <div class="info-details">
+              <h4>Use Case</h4>
+              <p>CASA/Credit Card Churn (có sẵn)</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrapper" style="background-color: var(--ncb-red-light); color: var(--ncb-red);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="info-details">
+              <h4>Thời gian học</h4>
+              <p>1 Tháng (Full-time ~8h/ngày)</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrapper" style="background-color: var(--accent-gold-light); color: var(--accent-gold);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            </div>
+            <div class="info-details">
+              <h4>Nguồn dữ liệu</h4>
+              <p>BigQuery (Data thực tế NCB)</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon-wrapper" style="background-color: var(--success-light); color: var(--success);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <div class="info-details">
+              <h4>Cấu trúc 2 Giai đoạn</h4>
+              <p>GĐ1: Data Prep · GĐ2: Model Dev</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius); margin-bottom: 24px;">
+          <h2 style="font-size: 20px; margin-bottom: 16px;">Về Dự Án & Phương Pháp Đào Tạo</h2>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+            Intern sẽ làm việc trên <strong>use case dự đoán Churn có sẵn</strong> (CASA/Credit Card) của NCB – không cần xây mới từ đầu mà tập trung vào việc <strong>sử dụng công cụ</strong> và <strong>hiểu quy trình DS end-to-end</strong>. Lộ trình chia làm 2 giai đoạn rõ ràng: <strong>Giai đoạn 1 (Tuần 1-2)</strong> tập trung vào truy vấn dữ liệu từ BigQuery, phân tích và tạo dashboard bằng Python. <strong>Giai đoạn 2 (Tuần 3-4)</strong> tập trung vào Feature Shortlisting, Univariate Analysis và huấn luyện model.
+          </p>
+          <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+            Mỗi tuần, Intern sẽ có một <strong>Sản phẩm bàn giao (Deliverable)</strong> cụ thể. Mentor hướng dẫn qua Daily Standup 15 phút mỗi sáng và kiểm tra tiến độ vào cuối chiều. Intern được cung cấp sẵn <strong>danh sách features</strong> và <strong>pipeline model mẫu</strong> để tập trung vào phân tích và hiểu bản chất, không phải tự dò dẫm.
+          </p>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           TAB: 4-WEEK ROADMAP
+           ========================================== -->
+      <section class="tab-content" id="tab-roadmap">
+        <div class="search-container">
+          <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" class="search-input" id="roadmap-search" placeholder="Tìm kiếm nội dung bài học, thư viện, hoặc tác vụ cụ thể...">
+        </div>
+
+        <!-- Phase Banner 1 -->
+        <div style="background: linear-gradient(135deg, var(--ncb-blue), #0066cc); color: #fff; padding: 16px 20px; border-radius: var(--radius); margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+          <div>
+            <div style="font-weight: 700; font-size: 16px;">GIAI ĐOẠN 1: DATA PREPARATION &amp; ANALYSIS</div>
+            <div style="font-size: 12px; opacity: 0.85;">Tuần 1-2 · Kết nối BigQuery → Khám phá → Trực quan hóa bằng Python → Phân tích</div>
+          </div>
+        </div>
+
+        <div class="timeline-container">
+          
+          <!-- WEEK 1 -->
+          <div class="week-node open" id="week-1-node">
+            <div class="week-marker">1</div>
+            <div class="week-header" onclick="toggleWeek(1)">
+              <div class="week-meta">
+                <h3>Tuần 1: Kết nối dữ liệu &amp; Khám phá (Data Access &amp; Exploration)</h3>
+                <div class="subtitle">Trọng tâm: Truy vấn dữ liệu thực tế CASA/Credit Card từ BigQuery, làm quen cấu trúc bảng, thống kê tổng quan bằng Python</div>
+              </div>
+              <button class="week-toggle-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+              </button>
+            </div>
+            
+            <div class="week-content">
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 1-2</span> Thiết lập môi trường &amp; Kết nối BigQuery</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-1">
+                    Cài đặt môi trường Python (Jupyter/Colab), cài đặt thư viện <code>google-cloud-bigquery</code> và xác thực tài khoản service account.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-2">
+                    Viết câu truy vấn SQL đầu tiên trên BigQuery Console: <code>SELECT * FROM dataset.table LIMIT 100</code> để xem cấu trúc dữ liệu CASA/Credit Card churn.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-3">
+                    Load kết quả truy vấn vào Python DataFrame bằng <code>client.query(sql).to_dataframe()</code>. Kiểm tra <code>df.shape</code>, <code>df.info()</code>, <code>df.dtypes</code>.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 3</span> Data Profiling &amp; Kiểm tra chất lượng dữ liệu</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-1">
+                    Kiểm tra tỷ lệ missing values cho từng cột bằng <code>df.isnull().mean()</code>. Đánh dấu các cột có tỷ lệ khuyết &gt;30% cần xử lý đặc biệt.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-2">
+                    Sử dụng <code>df.describe()</code> để đọc phân phối số liệu. Đối chiếu với Data Dictionary do Mentor cung cấp để hiểu ý nghĩa nghiệp vụ từng cột.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d2-3">
+                    Kiểm tra bản ghi trùng lặp <code>df.duplicated().sum()</code>, phân phối nhãn target (Churn vs Non-Churn) bằng <code>value_counts(normalize=True)</code>.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 4-5</span> EDA cơ bản &amp; Trực quan hóa đơn biến</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-1">
+                    Vẽ Histogram + Boxplot cho các biến số quan trọng (Hạn mức, Số dư, Độ tuổi, Số tháng không hoạt động) bằng Matplotlib/Seaborn.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-2">
+                    Vẽ Countplot/Bar chart cho các biến phân loại (Giới tính, Hạng thẻ, Khu vực). Viết nhận xét nghiệp vụ bên dưới mỗi biểu đồ.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-3">
+                    Đề xuất 3-5 câu hỏi kinh doanh từ dữ liệu (VD: "Nhóm thẻ nào có tỷ lệ churn cao nhất?", "Có mối liên hệ giữa số tháng inactive và churn không?").
+                  </li>
+                </ul>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="deliverable-info">
+                  <span class="deliverable-badge">Sản phẩm bàn giao Tuần 1</span>
+                  <div class="deliverable-title">Notebook Data Profiling &amp; EDA từ BigQuery</div>
+                  <div class="deliverable-desc">Jupyter Notebook chạy thông từ kết nối BigQuery → load data → data profiling → EDA đơn biến. Code sạch, có Markdown giải thích cho mỗi section.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <a href="#code-week-1" class="view-code-link-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Xem Code Mẫu
+                  </a>
+                  <button class="deliverable-btn" onclick="alert('Hãy chia sẻ link notebook GitHub/Drive cho Mentor review nhé!')">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    Nộp Bài
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEEK 2 -->
+          <div class="week-node" id="week-2-node">
+            <div class="week-marker">2</div>
+            <div class="week-header" onclick="toggleWeek(2)">
+              <div class="week-meta">
+                <h3>Tuần 2: Python Dashboard &amp; Phân tích chuyên sâu</h3>
+                <div class="subtitle">Trọng tâm: Tạo dashboard trực quan bằng Python (Plotly/Matplotlib), phân tích đa biến, đúc kết insight nghiệp vụ</div>
+              </div>
+              <button class="week-toggle-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+              </button>
+            </div>
+            
+            <div class="week-content">
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 6-7</span> Xây dựng Python Dashboard cho Key Metrics</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d1-1">
+                    Tạo dashboard tổng hợp bằng <code>matplotlib.pyplot.subplots()</code> hoặc <code>plotly</code>: Tỷ lệ Churn tổng thể, phân bổ theo Hạng thẻ, phân bổ theo Khu vực.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d1-2">
+                    Vẽ so sánh phân phối các feature liên tục giữa 2 nhóm Churn=1 vs Churn=0 (overlapping Histograms hoặc Violin plots). Nhận xét feature nào có sự khác biệt rõ rệt.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d1-3">
+                    Vẽ ma trận tương quan Heatmap bằng Seaborn. Xác định các cặp biến có tương quan cao (&gt;0.7) cần lưu ý khi đưa vào mô hình.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 8-9</span> Phân tích chuyên sâu &amp; Chân dung khách hàng Churn</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d2-1">
+                    Sử dụng <code>groupby()</code> tính Churn Rate theo từng segment (Giới tính ỗ Hạng thẻ, Khu vực & Số sản phẩm). Vẽ biểu đồ cột chồng (stacked bar).
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d2-2">
+                    Phân tích Bivariate: Scatterplot giữa Số lần giao dịch vs Giá trị giao dịch, tô màu theo nhãn Churn. Kết luận về hành vi chi tiêu.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d2-3">
+                    Tóm tắt "3 dấu hiệu rõ nhất" của khách hàng có nguy cơ churn từ tất cả biểu đồ đã phân tích.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 10</span> Tổng hợp &amp; Trình bày kết quả phân tích</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d3-1">
+                    Thiết kế slide 5 trang trình bày kết quả phân tích: Bối cảnh → Phân bổ Churn → Top 3 dấu hiệu → Chân dung KH rủi ro → Đề xuất hành động.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-d3-2">
+                    Thuyết trình nội bộ với Mentor. Nhận phản hồi và điều chỉnh trước khi chuyển sang giai đoạn Model Development.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Optional Data Studio -->
+              <div style="background: linear-gradient(135deg, rgba(255,193,7,0.08), rgba(255,152,0,0.08)); border: 1px dashed var(--accent-gold); padding: 16px 20px; border-radius: var(--radius); margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <svg width="18" height="18" fill="none" stroke="var(--accent-gold)" stroke-width="2" viewBox="0 0 24 24"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                  <strong style="color: var(--accent-gold); font-size: 14px;">OPTIONAL: Looker Studio (Data Studio) Dashboard</strong>
+                </div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-opt-1">
+                    Export kết quả phân tích từ Python ra Google Sheets hoặc CSV, kết nối vào Looker Studio làm nguồn dữ liệu.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w2-opt-2">
+                    Tạo dashboard tương tác trên Looker Studio: Pie chart Churn Rate, Bar chart theo Hạng thẻ, Bộ lọc theo Khu vực/Giới tính. Chia sẻ link cho Mentor.
+                  </li>
+                </ul>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px; font-style: italic;">👉 Phần này không bắt buộc nhưng sẽ giúp intern có thêm kỹ năng trình bày dữ liệu cho stakeholder bằng công cụ no-code.</div>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="deliverable-info">
+                  <span class="deliverable-badge">Sản phẩm bàn giao Tuần 2</span>
+                  <div class="deliverable-title">Python Dashboard &amp; Slide "Chân dung KH có nguy cơ churn"</div>
+                  <div class="deliverable-desc">Dashboard Python trực quan, slide 5 trang nghiệp vụ trình bày pattern churn từ data thực tế, kèm đề xuất hành động cho bộ phận Credit Card/CASA.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <a href="#code-week-2" class="view-code-link-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Xem Code Mẫu
+                  </a>
+                  <button class="deliverable-btn" onclick="alert('Gửi bản dashboard + slide thuyết trình cho Mentor nhé!')">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    Nộp Bài
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Phase Banner 2 -->
+        <div style="background: linear-gradient(135deg, var(--ncb-red), #cc3333); color: #fff; padding: 16px 20px; border-radius: var(--radius); margin-bottom: 8px; margin-top: 24px; display: flex; align-items: center; gap: 12px;">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <div>
+            <div style="font-weight: 700; font-size: 16px;">GIAI ĐOẠN 2: MODEL DEVELOPMENT</div>
+            <div style="font-size: 12px; opacity: 0.85;">Tuần 3-4 · Feature Shortlisting → Univariate Analysis → Train Model → Present Results</div>
+          </div>
+        </div>
+
+        <div class="timeline-container">
+
+          <!-- WEEK 3 -->
+          <div class="week-node" id="week-3-node">
+            <div class="week-marker">3</div>
+            <div class="week-header" onclick="toggleWeek(3)">
+              <div class="week-meta">
+                <h3>Tuần 3: Feature Selection &amp; Tiền xử lý (Feature Shortlisting)</h3>
+                <div class="subtitle">Trọng tâm: Nhận danh sách features có sẵn, thực hành Univariate Analysis, lọc biến quan trọng, xây pipeline tiền xử lý</div>
+              </div>
+              <button class="week-toggle-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+              </button>
+            </div>
+            
+            <div class="week-content">
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 11-12</span> Tiếp nhận Feature List &amp; Tìm hiểu nghiệp vụ từng biến</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d1-1">
+                    Nhận danh sách features có sẵn (pre-created feature list) từ Mentor. Đọc tài liệu mô tả ý nghĩa nghiệp vụ của từng biến.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d1-2">
+                    Phân loại features thành các nhóm: Demographics (tuổi, giới tính), Transaction Behavior (số lần GD, giá trị GD), Product (hạng thẻ, số SP), Engagement (tháng inactive).
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d1-3">
+                    Kiểm tra data quality của từng feature: tỷ lệ missing, tỷ lệ zero, phân phối outlier. Đánh dấu features cần xử lý trước khi đưa vào model.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 13-14</span> Univariate Analysis &amp; Feature Shortlisting</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d2-1">
+                    Thực hành Univariate Analysis: Với mỗi feature số, tính <strong>KS Statistic</strong> hoặc dùng biểu đồ phân phối so sánh giữa nhóm Churn vs Non-Churn.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d2-2">
+                    Với feature phân loại, tính <strong>Churn Rate theo từng category</strong> và sử dụng Chi-squared test hoặc WoE/IV (Weight of Evidence / Information Value) nếu có hướng dẫn.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d2-3">
+                    Lập bảng tổng hợp Feature Shortlist: Xếp hạng các features theo mức độ phân biệt (discriminatory power). Loại bỏ features yếu hoặc bị multicollinearity.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 15</span> Xây dựng Pipeline tiền xử lý dữ liệu</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d3-1">
+                    Xử lý missing values (<code>SimpleImputer</code>), mã hóa biến phân loại (<code>OneHotEncoder</code>/<code>LabelEncoder</code>), chuẩn hóa biến số (<code>StandardScaler</code>).
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w3-d3-2">
+                    Tạo bảng so sánh "Before vs After": số lượng features ban đầu → sau shortlisting → sau tiền xử lý. Giải thích lý do loại/giữ từng feature.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="deliverable-info">
+                  <span class="deliverable-badge">Sản phẩm bàn giao Tuần 3</span>
+                  <div class="deliverable-title">Feature Shortlist Report &amp; Preprocessing Pipeline</div>
+                  <div class="deliverable-desc">Bảng xếp hạng features kèm lý do chọn/loại, code pipeline tiền xử lý chạy end-to-end, slide "Before vs After" trình bày cho Mentor.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <a href="#code-week-3" class="view-code-link-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Xem Code Mẫu
+                  </a>
+                  <button class="deliverable-btn" onclick="alert('Nộp Feature Shortlist và code tiền xử lý cho Mentor kiểm tra nhé!')">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    Nộp Bài
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WEEK 4 -->
+          <div class="week-node" id="week-4-node">
+            <div class="week-marker">4</div>
+            <div class="week-header" onclick="toggleWeek(4)">
+              <div class="week-meta">
+                <h3>Tuần 4: Huấn luyện Model &amp; Trình bày kết quả</h3>
+                <div class="subtitle">Trọng tâm: Train model với features đã shortlist, đánh giá hiệu năng, trích xuất insight, storytelling 10 phút</div>
+              </div>
+              <button class="week-toggle-btn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+              </button>
+            </div>
+            
+            <div class="week-content">
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 16-17</span> Train Baseline Model &amp; Đánh giá</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d1-1">
+                    Chia tập dữ liệu Train/Test (80/20) với <code>train_test_split(stratify=y)</code>. Giải thích tại sao cần stratify khi dữ liệu mất cân bằng.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d1-2">
+                    Nhận Pipeline model từ Mentor (Logistic Regression / Random Forest). Huấn luyện trên tập train, ghi lại AUC-ROC, Precision, Recall, F1-Score.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d1-3">
+                    Vẽ ROC Curve và Confusion Matrix. Thảo luận với Mentor: Trong bài toán churn banking, nên ưu tiên Precision hay Recall? Tại sao?
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 18-19</span> Feature Importance &amp; Kiểm chứng kết quả</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d2-1">
+                    Trích xuất Feature Importance (<code>model.feature_importances_</code> hoặc <code>model.coef_</code>). Vẽ biểu đồ horizontal bar chart Top 10 features quan trọng nhất.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d2-2">
+                    Kiểm chứng: So sánh Feature Importance từ model với kết quả Univariate Analysis ở Tuần 3. Kết luận xem 2 góc nhìn có nhất quán không.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d2-3">
+                    (Nâng cao) Thử thay đổi tập features (thêm/bớt) và so sánh AUC để chứng minh Feature Selection ảnh hưởng thế nào đến hiệu năng model.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="day-block">
+                <div class="day-title"><span>Ngày 20</span> Storytelling &amp; Báo cáo Demo cuối kỳ</div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d3-1">
+                    Thiết kế bài thuyết trình "Storytelling" 10 phút: Bối cảnh nghiệp vụ → Phân tích dữ liệu (GĐ1) → Feature Selection → Kết quả Model → Đề xuất hành động cho phòng CSKH.
+                  </li>
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-d3-2">
+                    Demo trước Mentor (và stakeholder nếu có). Nhận phản hồi, tổng kết những gì đã học được trong 1 tháng.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Optional: Export kết quả Model lên Looker Studio -->
+              <div style="background: linear-gradient(135deg, rgba(255,193,7,0.08), rgba(255,152,0,0.08)); border: 1px dashed var(--accent-gold); padding: 16px 20px; border-radius: var(--radius); margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <svg width="18" height="18" fill="none" stroke="var(--accent-gold)" stroke-width="2" viewBox="0 0 24 24"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                  <strong style="color: var(--accent-gold); font-size: 14px;">OPTIONAL: Trình bày Model Results trên Looker Studio</strong>
+                </div>
+                <ul class="task-list">
+                  <li class="task-item" onclick="toggleTaskCheckbox(this)">
+                    <input type="checkbox" class="task-checkbox" data-task-id="w4-opt-1">
+                    Export kết quả dự đoán + Feature Importance ra Google Sheets, tạo dashboard kết quả model trên Looker Studio để stakeholder dễ theo dõi.
+                  </li>
+                </ul>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 8px; font-style: italic;">&#128161; Dashboard kết quả model giúp trình bày chuyên nghiệp hơn so với screenshot biểu đồ từ Jupyter Notebook.</div>
+              </div>
+
+              <div class="deliverable-card">
+                <div class="deliverable-info">
+                  <span class="deliverable-badge">Sản phẩm bàn giao Tuần 4</span>
+                  <div class="deliverable-title">Demo 10 phút &amp; Báo cáo kết quả Model cuối kỳ</div>
+                  <div class="deliverable-desc">Bài thuyết trình end-to-end: Từ khai thác dữ liệu BigQuery → Phân tích → Feature Selection → Model → Insight hành động. Chứng minh model tìm được KH churn tốt hơn phán đoán cảm tính.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <a href="#code-week-4" class="view-code-link-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Xem Code Mẫu
+                  </a>
+                  <button class="deliverable-btn" onclick="alert('Hoàn thành! Sẵn sàng báo cáo hội đồng!')">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                    Báo cáo Cuối Kỳ
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> <!-- Close week-node (week 4) -->
+        </div> <!-- Close timeline-container (phase 2) -->
+      </section> <!-- Close tab-roadmap -->
+
+      <!-- ==========================================
+           TAB: BUSINESS & DATA SCHEMA
+           ========================================== -->
+      <section class="tab-content" id="tab-business">
+        <div class="tab-grid">
+          
+          <div>
+            <h2 style="font-size: 20px; margin-bottom: 12px;">Ngữ cảnh nghiệp vụ Churn Thẻ Tín Dụng</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+              Tại ngân hàng NCB, việc giữ chân khách hàng (Customer Retention) có chi phí tối ưu hơn nhiều so với việc tìm kiếm khách hàng mới. Thẻ tín dụng là dòng sản phẩm mang lại doanh thu định kỳ lớn thông qua phí thường niên, lãi suất chi tiêu và phí xử lý giao dịch.
+            </p>
+            
+            <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius); margin-bottom: 24px;">
+              <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--ncb-red);">Định nghĩa khách hàng rời bỏ (Churn) trong thực tế:</h3>
+              <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.5;">
+                Khách hàng chủ động gửi yêu cầu hủy thẻ tín dụng <strong>hoặc</strong> tài khoản thẻ không ghi nhận bất cứ phát sinh chi tiêu/thanh toán nào liên tiếp trong vòng 3 tháng gần nhất (gọi là tài khoản ngủ đông - dormant).
+              </p>
+            </div>
+
+            <h3 style="font-size: 16px; margin-bottom: 12px;">Cấu trúc file dữ liệu mẫu (Data Dictionary)</h3>
+            <table class="schema-table">
+              <thead>
+                <tr>
+                  <th>Cột Dữ Liệu</th>
+                  <th>Kiểu Dữ Liệu</th>
+                  <th>Giải Thích Ý Nghĩa</th>
+                </tr>
+              </thead>
+              <tbody id="schema-table-body">
+                <!-- Sẽ được render động từ data.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Interactive Simulator Playground -->
+          <div>
+            <div class="simulator-card">
+              <div class="sim-header">
+                <h3>Bộ mô phỏng Luật Churn (Heuristics)</h3>
+                <span class="sim-status">NCB Mock Engine</span>
+              </div>
+              <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 20px; line-height: 1.4;">
+                Dưới đây là một mô hình giả định luật nghiệp vụ. Intern có thể thay đổi các giá trị để xem quy luật rời bỏ của khách hàng thay đổi thế nào.
+              </p>
+
+              <!-- Inputs -->
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <span>Số tháng ngưng giao dịch</span>
+                  <span class="sim-value" id="val-inactive">3 tháng</span>
+                </div>
+                <input type="range" class="sim-slider" id="input-inactive" min="0" max="12" value="3">
+              </div>
+
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <span>Số lần quẹt thẻ / năm</span>
+                  <span class="sim-value" id="val-trans-count">24 lần</span>
+                </div>
+                <input type="range" class="sim-slider" id="input-trans-count" min="2" max="150" value="24">
+              </div>
+
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <span>Số dư nợ thẻ (VND)</span>
+                  <span class="sim-value" id="val-balance">1,500,000đ</span>
+                </div>
+                <input type="range" class="sim-slider" id="input-balance" min="0" max="20000000" step="500000" value="1500000">
+              </div>
+
+              <div class="sim-slider-group">
+                <div class="sim-label-row">
+                  <span>Hạn mức tín dụng (VND)</span>
+                  <span class="sim-value" id="val-limit">30,000,000đ</span>
+                </div>
+                <input type="range" class="sim-slider" id="input-limit" min="5000000" max="100000000" step="1000000" value="30000000">
+              </div>
+
+              <!-- Output visual gauge -->
+              <div class="gauge-container">
+                <div class="gauge-radial">
+                  <svg class="gauge-svg" width="120" height="120" viewBox="0 0 120 120">
+                    <circle class="gauge-track" cx="60" cy="60" r="50" stroke-width="8" fill="none"/>
+                    <circle class="gauge-fill" id="sim-gauge-fill" cx="60" cy="60" r="50" stroke-width="8" fill="none" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+                  </svg>
+                  <div class="gauge-text">
+                     <div class="gauge-percent" id="sim-churn-percentage">45%</div>
+                     <div class="gauge-label">Nguy cơ</div>
+                  </div>
+                </div>
+                <div class="gauge-desc" id="sim-churn-desc">Mức Độ Nguy Cơ: Trung Bình</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================
+           TAB: CODE LIBRARY
+           ========================================== -->
+      <section class="tab-content" id="tab-code">
+        <h2 style="font-size: 20px; margin-bottom: 8px;">Thư viện Code mẫu cho Intern</h2>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Các đoạn code snippet nền tảng giúp bạn Intern tăng tốc lập trình mà vẫn hiểu bản chất hoạt động của thư viện.</p>
+
+        <!-- Sub-tabs for Week 1 to 4 -->
+        <div id="code-tabs-nav" class="code-tabs-nav">
+          <!-- Sẽ được render động từ app.js -->
+        </div>
+
+        <div id="code-snippets-container">
+          <!-- Sẽ được render động từ data.js -->
+        </div>
+      </section>
+
+      <!-- ==========================================
+           TAB: EVALUATION & MENTOR TOOLKIT
+           ========================================== -->
+      <section class="tab-content" id="tab-evaluation">
+        <!-- Section 1: Rubrics (2x2 grid) -->
+        <div style="margin-bottom: 32px;">
+          <h3 class="section-title">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Tiêu chí Đánh giá Sản phẩm bàn giao (Weekly Rubrics)
+          </h3>
+          <div class="rubric-grid-2x2" id="rubrics-list-container">
+            <!-- Sẽ được render động từ data.js -->
+          </div>
+        </div>
+
+        <!-- Section 2: Mentor Toolkit (Principles and Templates) -->
+        <div class="mentor-section">
+          <h3 class="section-title" style="color: var(--text-primary); margin-bottom: 20px;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Cẩm nang &amp; Công cụ dành cho Mentor
+          </h3>
+          
+          <!-- Mentor Principles (3 columns) -->
+          <div class="mentor-principles-row" id="mentor-principles-container" style="margin-bottom: 28px;">
+            <!-- Sẽ được render động từ data.js -->
+          </div>
+
+          <h4 style="font-size: 15px; margin-bottom: 8px; font-weight: 600; color: var(--text-primary);">Mẫu phản hồi hàng tuần (Feedback Templates)</h4>
+          <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">Mentor có thể sao chép nhanh nhận xét mẫu để gửi đánh giá định kỳ cho intern qua Email hoặc chat room.</p>
+          
+          <!-- Feedback Templates (2x2 grid) -->
+          <div class="mentor-grid" id="feedback-templates-container">
+            <!-- Sẽ được render động từ data.js -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- JavaScript Bundle -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
