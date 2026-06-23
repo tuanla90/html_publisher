@@ -582,6 +582,117 @@ function renderDynamicContent() {
       </div>
     `).join('');
   }
+
+  // 6. Render Mentor Contacts from config.js
+  renderMentorContacts();
+}
+
+/**
+ * Render supporting mentor contacts from window.NCB_MENTOR_CONFIG
+ */
+function renderMentorContacts() {
+  const mentorConfig = window.NCB_MENTOR_CONFIG;
+  if (!mentorConfig) return;
+
+  // 1. Render Overview Tab Mentor Grid
+  const overviewGrid = document.getElementById('overview-mentor-grid');
+  if (overviewGrid) {
+    const mentors = [
+      { key: 'manager', initial: 'M1', color: 'linear-gradient(135deg, #0054A6, #3b82f6)', roleName: 'Quản lý tổng (Tab Tổng quan)', roleColor: 'var(--ncb-blue)' },
+      { key: 'domain', initial: 'M2', color: 'linear-gradient(135deg, #10b981, #059669)', roleName: 'Phụ trách Domain (Tab Nghiệp vụ & Data)', roleColor: 'var(--success)' },
+      { key: 'phase1', initial: 'M3', color: 'linear-gradient(135deg, #f59e0b, #d97706)', roleName: 'Phụ trách Giai đoạn 1 (Tuần 1-2)', roleColor: 'var(--accent-gold)' },
+      { key: 'phase2', initial: 'M4', color: 'linear-gradient(135deg, #ef4444, #dc2626)', roleName: 'Phụ trách Giai đoạn 2 (Tuần 3-4)', roleColor: 'var(--ncb-red)' }
+    ];
+
+    overviewGrid.innerHTML = mentors.map(m => {
+      const data = mentorConfig[m.key];
+      if (!data) return '';
+      return `
+        <div class="mentor-contact-card" style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: var(--transition);">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: ${m.color}; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 15px; font-family: var(--font-heading); flex-shrink: 0;">
+              ${m.initial}
+            </div>
+            <div>
+              <div style="font-weight: 600; font-size: 15px; color: var(--text-primary);">${escapeHtml(data.name || '')}</div>
+              <div style="font-size: 12px; color: var(--text-secondary);">${escapeHtml(data.title || '')}</div>
+            </div>
+          </div>
+          <div style="border-top: 1px solid var(--border-color); padding-top: 10px; font-size: 13px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary);">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink: 0;"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span style="font-weight: 600; color: ${m.roleColor};">Vai trò: ${escapeHtml(m.roleName)}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary);">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink: 0;"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>${escapeHtml(data.email || '')}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary);">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink: 0;"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <span>${escapeHtml(data.phone || '')}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 2. Render Phase 1 Mentor Banner
+  const phase1Banner = document.getElementById('roadmap-phase1-mentor-banner');
+  if (phase1Banner && mentorConfig.phase1) {
+    const data = mentorConfig.phase1;
+    phase1Banner.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #d97706); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px; font-family: var(--font-heading); flex-shrink: 0;">M3</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Mentor phụ trách Giai đoạn 1: <span style="font-weight: 400; color: var(--text-secondary);">${escapeHtml(data.title || '')}</span></div>
+          <div style="font-size: 12px; color: var(--text-secondary); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
+            <span>📧 ${escapeHtml(data.email || '')}</span>
+            <span>📞 ${escapeHtml(data.phone || '')}</span>
+          </div>
+        </div>
+      </div>
+      <span class="badge" style="background-color: var(--accent-gold-light); color: var(--accent-gold); font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 600; border: none; display: inline-block;">Roadmap Phase 1 Lead</span>
+    `;
+  }
+
+  // 3. Render Phase 2 Mentor Banner
+  const phase2Banner = document.getElementById('roadmap-phase2-mentor-banner');
+  if (phase2Banner && mentorConfig.phase2) {
+    const data = mentorConfig.phase2;
+    phase2Banner.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #ef4444, #dc2626); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px; font-family: var(--font-heading); flex-shrink: 0;">M4</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Mentor phụ trách Giai đoạn 2: <span style="font-weight: 400; color: var(--text-secondary);">${escapeHtml(data.title || '')}</span></div>
+          <div style="font-size: 12px; color: var(--text-secondary); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
+            <span>📧 ${escapeHtml(data.email || '')}</span>
+            <span>📞 ${escapeHtml(data.phone || '')}</span>
+          </div>
+        </div>
+      </div>
+      <span class="badge" style="background-color: var(--ncb-red-light); color: var(--ncb-red); font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 600; border: none; display: inline-block;">Roadmap Phase 2 Lead</span>
+    `;
+  }
+
+  // 4. Render Business Domain Mentor Banner
+  const businessBanner = document.getElementById('business-mentor-banner');
+  if (businessBanner && mentorConfig.domain) {
+    const data = mentorConfig.domain;
+    businessBanner.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px; font-family: var(--font-heading); flex-shrink: 0;">M2</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-primary);">Mentor phụ trách Nghiệp vụ &amp; Dữ liệu: <span style="font-weight: 400; color: var(--text-secondary);">${escapeHtml(data.title || '')}</span></div>
+          <div style="font-size: 12px; color: var(--text-secondary); display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2px;">
+            <span>📧 ${escapeHtml(data.email || '')}</span>
+            <span>📞 ${escapeHtml(data.phone || '')}</span>
+          </div>
+        </div>
+      </div>
+      <span class="badge" style="background-color: var(--success-light); color: var(--success); font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 600; border: none; display: inline-block;">Domain Lead</span>
+    `;
+  }
 }
 
 // Utility to escape HTML tags in code blocks
