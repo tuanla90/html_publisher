@@ -598,8 +598,8 @@ function renderMentorContacts() {
   const overviewGrid = document.getElementById('overview-mentor-grid');
   if (overviewGrid) {
     const mentors = [
-      { key: 'manager', initial: 'M1', color: 'linear-gradient(135deg, #0054A6, #3b82f6)', roleName: 'Quản lý tổng (Tab Tổng quan)', roleColor: 'var(--ncb-blue)' },
-      { key: 'domain', initial: 'M2', color: 'linear-gradient(135deg, #10b981, #059669)', roleName: 'Phụ trách Domain (Tab Nghiệp vụ & Data)', roleColor: 'var(--success)' },
+      { key: 'manager', initial: 'M1', color: 'linear-gradient(135deg, #0054A6, #3b82f6)', roleName: 'Quản lý tổng', roleColor: 'var(--ncb-blue)' },
+      { key: 'domain', initial: 'M2', color: 'linear-gradient(135deg, #10b981, #059669)', roleName: 'Phụ trách Domain', roleColor: 'var(--success)' },
       { key: 'phase1', initial: 'M3', color: 'linear-gradient(135deg, #f59e0b, #d97706)', roleName: 'Phụ trách Giai đoạn 1 (Tuần 1-2)', roleColor: 'var(--accent-gold)' },
       { key: 'phase2', initial: 'M4', color: 'linear-gradient(135deg, #ef4444, #dc2626)', roleName: 'Phụ trách Giai đoạn 2 (Tuần 3-4)', roleColor: 'var(--ncb-red)' }
     ];
@@ -703,6 +703,32 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+/* ==========================================
+   MOBILE SIDEBAR DRAWER TOGGLE
+   ========================================== */
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const sidebar = document.querySelector('.sidebar');
+const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+function closeMobileSidebar() {
+  if (sidebar) sidebar.classList.remove('open');
+  if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+}
+
+if (mobileMenuBtn && sidebar && sidebarBackdrop) {
+  mobileMenuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    sidebarBackdrop.classList.toggle('active');
+  });
+
+  sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+  // Close sidebar after clicking any menu item on mobile
+  menuItems.forEach(item => {
+    item.addEventListener('click', closeMobileSidebar);
+  });
 }
 
 // Render dynamic content on script startup

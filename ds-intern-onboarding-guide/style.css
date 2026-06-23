@@ -1142,3 +1142,273 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px 0;
   }
 }
+
+/* Hide mobile menu button by default on desktop */
+.mobile-menu-btn {
+  display: none;
+}
+
+/* ==========================================
+   RESPONSIVE MOBILE STYLES
+   ========================================== */
+@media (max-width: 768px) {
+  /* Body Layout */
+  body {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+  }
+
+  /* Mobile Sidebar Overlay */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    overflow-y: auto; /* Allow scrolling if screen height is small */
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Backdrop Overlay */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fadeInBackdrop 0.2s ease forwards;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  @keyframes fadeInBackdrop {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Main Wrapper and Content Area */
+  .main-wrapper {
+    height: auto;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .content-area {
+    padding: 16px;
+    overflow: visible;
+  }
+
+  /* Top Navigation Bar (Sticky on Mobile) */
+  .top-bar {
+    padding: 0 16px;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: var(--transition);
+  }
+
+  .mobile-menu-btn:hover {
+    background: var(--bg-primary);
+  }
+
+  .top-title {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  /* Progress Widget on Mobile */
+  .progress-widget {
+    padding: 4px 8px;
+    gap: 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .progress-bar-container {
+    width: 50px;
+    height: 6px;
+  }
+
+  #progress-ratio {
+    display: none !important; /* Hide ratio text on small screens */
+  }
+
+  #progress-percent-label {
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* Overview Hero Banner */
+  .hero-banner {
+    padding: 20px;
+  }
+
+  .hero-info {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-desc {
+    font-size: 13px;
+  }
+
+  /* Info Cards Grid */
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .info-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  /* Tab Grid (Business context) */
+  .tab-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .simulator-card {
+    position: static; /* Disable sticky on mobile */
+    margin-top: 16px;
+  }
+
+  /* Timeline Week Roadmap Spacings */
+  .timeline-container {
+    margin-left: 10px;
+    padding-left: 20px;
+    gap: 24px;
+  }
+
+  .week-marker {
+    left: -32px;
+    top: 20px;
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+    font-size: 10px;
+  }
+
+  .week-node {
+    padding: 16px;
+  }
+
+  .week-meta h3 {
+    font-size: 16px;
+  }
+
+  /* Deliverable Card mobile wrapping */
+  .deliverable-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .deliverable-info {
+    max-width: 100%;
+  }
+
+  .deliverable-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .deliverable-card .view-code-link-btn,
+  .deliverable-card .deliverable-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Tables styling for overflow scrolling */
+  .schema-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Code Tab buttons navigation scrollbar on mobile */
+  #code-tabs-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .code-tab-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Card headers & layout */
+  .snippet-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .snippet-header div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .snippet-title {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  /* Collapsing multi-column grids to 1 column on Mobile */
+  .mentor-contact-grid,
+  .rubric-grid,
+  .mentor-grid,
+  .rubric-grid-2x2 {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -13,27 +13,27 @@ window.NCB_LOCK_CONFIG = {
 
 window.NCB_MENTOR_CONFIG = {
   "manager": {
-    "name": "Mentor Quản lý Tổng",
-    "title": "Trưởng nhóm / Quản lý Dự án",
-    "email": "mentor1@ncb-bank.vn",
-    "phone": "09xx-xxx-xxx"
+    "name": "Nguyễn Quang Phú",
+    "title": "AI/ML Team leader",
+    "email": "phunq@ncb-bank.vn",
+    "phone": "0393598353"
   },
   "domain": {
-    "name": "Mentor Nghiệp vụ",
-    "title": "Chuyên gia Nghiệp vụ / Dữ liệu",
-    "email": "mentor2@ncb-bank.vn",
-    "phone": "09xx-xxx-xxx"
+    "name": "Trần Nguyễn Hoàng Tùng",
+    "title": "Chuyên viên team AI/ML",
+    "email": "tungtnh@ncb-bank.vn",
+    "phone": "0917885577"
   },
   "phase1": {
-    "name": "Mentor Giai đoạn 1",
-    "title": "Kỹ sư Dữ liệu / Phân tích",
-    "email": "mentor3@ncb-bank.vn",
-    "phone": "09xx-xxx-xxx"
+    "name": "Lê Anh Tuấn",
+    "title": "Chuyên gia cấp cao team BI",
+    "email": "tuanla2@ncb-bank.vn",
+    "phone": "0389950827"
   },
   "phase2": {
-    "name": "Mentor Giai đoạn 2",
-    "title": "Kỹ sư ML / Nhà khoa học Dữ liệu",
-    "email": "mentor4@ncb-bank.vn",
-    "phone": "09xx-xxx-xxx"
+    "name": "Nguyễn Văn Khánh",
+    "title": "Chuyên gia cấp cao team AI/ML",
+    "email": "khanhnv@ncb-bank.vn",
+    "phone": "0384401168"
   }
 };
