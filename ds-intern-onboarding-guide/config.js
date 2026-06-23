@@ -5,8 +5,8 @@
  */
 
 window.NCB_LOCK_CONFIG = {
-  "code-1": "2026-06-20", // Tuần 1: Data Access (đã mở)
-  "code-2": "2026-06-25", // Tuần 2: EDA Dashboard (khóa đến 25/06/2026)
-  "code-3": "2026-07-02", // Tuần 3: Feature Prep (khóa đến 02/07/2026)
-  "code-4": "2026-07-09"  // Tuần 4: Model Training (khóa đến 09/07/2026)
+  "code-1": "2026-07-09", // Tuần 1: Data Access (đã mở)
+  "code-2": "2026-07-16", // Tuần 2: EDA Dashboard (khóa đến 25/06/2026)
+  "code-3": "2026-07-23", // Tuần 3: Feature Prep (khóa đến 02/07/2026)
+  "code-4": "2026-07-30"  // Tuần 4: Model Training (khóa đến 09/07/2026)
 };
