@@ -46,6 +46,11 @@ global.localStorage = {
 };
 global.Event = function(name) { return { name }; };
 
+// Run schema.js
+console.log("=== Loading schema.js ===");
+const schemaCode = fs.readFileSync('schema.js', 'utf8');
+eval(schemaCode);
+
 // Run data.js
 console.log("=== Loading data.js ===");
 const dataCode = fs.readFileSync('data.js', 'utf8');

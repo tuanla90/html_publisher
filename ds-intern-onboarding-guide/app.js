@@ -263,39 +263,45 @@ function calculateChurnRisk() {
   const inactive = parseInt(inputInactive.value);
   const transCount = parseInt(inputTransCount.value);
   const balance = parseInt(inputBalance.value);
-  const limit = parseInt(inputLimit.value);
+  const savingBalance = parseInt(inputLimit.value); // mapped from input-limit
 
   // Update UI labels
   valInactive.textContent = `${inactive} tháng`;
   valTransCount.textContent = `${transCount} lần`;
   valBalance.textContent = formatVND(balance);
-  valLimit.textContent = formatVND(limit);
+  valLimit.textContent = formatVND(savingBalance);
 
-  // Core rule heuristic logic
-  let riskScore = 15; // base level risk
+  // Core rule heuristic logic for CASA Churn
+  let riskScore = 20; // base level risk
 
-  // Inactivity is highly dangerous in banking
+  // Inactivity is highly dangerous for CASA accounts
   if (inactive >= 3) {
-    riskScore += (inactive - 2) * 15;
+    riskScore += (inactive - 2) * 12;
   } else {
     riskScore -= (3 - inactive) * 5;
   }
 
-  // Low transaction counts indicates disuse
-  if (transCount < 20) {
-    riskScore += 25;
-  } else if (transCount < 50) {
+  // Transaction counts (frequency of transfers, bill pays, card swipes)
+  if (transCount < 12) {
+    riskScore += 25; // less than 1 transaction per month is dormant risk
+  } else if (transCount < 36) {
     riskScore += 10;
-  } else {
-    riskScore -= 10;
+  } else if (transCount >= 60) {
+    riskScore -= 12; // active transaction user
   }
 
-  // Utilization ratio (balance / limit)
-  const utilization = limit > 0 ? balance / limit : 0;
-  if (utilization < 0.05) {
-    riskScore += 20; // inactive card risk
-  } else if (utilization > 0.1 && utilization < 0.5) {
-    riskScore -= 15; // healthy active customer
+  // Current CASA Balance
+  if (balance < 1000000) {
+    riskScore += 20; // very low balance (below 1M VND) indicates churn risk
+  } else if (balance > 10000000) {
+    riskScore -= 15; // high balance keeps customer retained
+  }
+
+  // Relationship check (Saving account balance)
+  if (savingBalance > 20000000) {
+    riskScore -= 15; // customer has term deposits, low risk of leaving
+  } else if (savingBalance === 0) {
+    riskScore += 5; // no saving deposits
   }
 
   // Constrain risk score between 5% and 99%
@@ -389,8 +395,9 @@ function renderDynamicContent() {
 
   // 1. Render Business Tab - Data Schema Table
   const schemaTableBody = document.getElementById('schema-table-body');
-  if (schemaTableBody && data.schema) {
-    schemaTableBody.innerHTML = data.schema.map(item => `
+  const schemaData = window.NCB_SCHEMA_DATA;
+  if (schemaTableBody && schemaData) {
+    schemaTableBody.innerHTML = schemaData.map(item => `
       <tr>
         <td><code>${item.column}</code></td>
         <td><span class="badge-type ${item.type}">${item.typeName}</span></td>

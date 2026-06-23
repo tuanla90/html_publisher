@@ -83,9 +83,9 @@
       <section class="tab-content active" id="tab-overview">
         <div class="hero-banner">
           <div class="hero-info">
-            <span class="hero-badge">Existing Use Case · CASA/Credit Card Churn · BigQuery → Python → Model</span>
+            <span class="hero-badge">Existing Use Case · CASA Churn · BigQuery → Python → Model</span>
             <h1 class="hero-title">Onboarding Data Science Plan</h1>
-            <p class="hero-desc">Bản cẩm nang đào tạo 1 tháng. Intern sẽ làm việc trực tiếp trên use case Churn dự đoán có sẵn (CASA/Credit Card) của NCB, truy vấn dữ liệu từ BigQuery, xây dashboard phân tích bằng Python, và thực hành Feature Shortlisting + Model Development trên danh sách features có sẵn.</p>
+            <p class="hero-desc">Bản cẩm nang đào tạo 1 tháng. Intern sẽ làm việc trực tiếp trên use case Churn dự đoán có sẵn (CASA Churn) của NCB, truy vấn dữ liệu từ BigQuery, xây dashboard phân tích bằng Python, và thực hành Feature Shortlisting + Model Development trên danh sách features có sẵn.</p>
           </div>
         </div>
 
@@ -96,7 +96,7 @@
             </div>
             <div class="info-details">
               <h4>Use Case</h4>
-              <p>CASA/Credit Card Churn (có sẵn)</p>
+              <p>CASA Churn (có sẵn)</p>
             </div>
           </div>
           <div class="info-card">
@@ -131,7 +131,7 @@
         <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius); margin-bottom: 24px;">
           <h2 style="font-size: 20px; margin-bottom: 16px;">Về Dự Án & Phương Pháp Đào Tạo</h2>
           <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
-            Intern sẽ làm việc trên <strong>use case dự đoán Churn có sẵn</strong> (CASA/Credit Card) của NCB – không cần xây mới từ đầu mà tập trung vào việc <strong>sử dụng công cụ</strong> và <strong>hiểu quy trình DS end-to-end</strong>. Lộ trình chia làm 2 giai đoạn rõ ràng: <strong>Giai đoạn 1 (Tuần 1-2)</strong> tập trung vào truy vấn dữ liệu từ BigQuery, phân tích và tạo dashboard bằng Python. <strong>Giai đoạn 2 (Tuần 3-4)</strong> tập trung vào Feature Shortlisting, Univariate Analysis và huấn luyện model.
+            Intern sẽ làm việc trên <strong>use case dự đoán Churn có sẵn</strong> (CASA Churn) của NCB – không cần xây mới từ đầu mà tập trung vào việc <strong>sử dụng công cụ</strong> và <strong>hiểu quy trình DS end-to-end</strong>. Lộ trình chia làm 2 giai đoạn rõ ràng: <strong>Giai đoạn 1 (Tuần 1-2)</strong> tập trung vào truy vấn dữ liệu từ BigQuery, phân tích và tạo dashboard bằng Python. <strong>Giai đoạn 2 (Tuần 3-4)</strong> tập trung vào Feature Shortlisting, Univariate Analysis và huấn luyện model.
           </p>
           <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
             Mỗi tuần, Intern sẽ có một <strong>Sản phẩm bàn giao (Deliverable)</strong> cụ thể. Mentor hướng dẫn qua Daily Standup 15 phút mỗi sáng và kiểm tra tiến độ vào cuối chiều. Intern được cung cấp sẵn <strong>danh sách features</strong> và <strong>pipeline model mẫu</strong> để tập trung vào phân tích và hiểu bản chất, không phải tự dò dẫm.
@@ -165,7 +165,7 @@
             <div class="week-header" onclick="toggleWeek(1)">
               <div class="week-meta">
                 <h3>Tuần 1: Kết nối dữ liệu &amp; Khám phá (Data Access &amp; Exploration)</h3>
-                <div class="subtitle">Trọng tâm: Truy vấn dữ liệu thực tế CASA/Credit Card từ BigQuery, làm quen cấu trúc bảng, thống kê tổng quan bằng Python</div>
+                <div class="subtitle">Trọng tâm: Truy vấn dữ liệu thực tế CASA Churn từ BigQuery, làm quen cấu trúc bảng, thống kê tổng quan bằng Python</div>
               </div>
               <button class="week-toggle-btn">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
@@ -182,7 +182,7 @@
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-2">
-                    Viết câu truy vấn SQL đầu tiên trên BigQuery Console: <code>SELECT * FROM dataset.table LIMIT 100</code> để xem cấu trúc dữ liệu CASA/Credit Card churn.
+                    Viết câu truy vấn SQL đầu tiên trên BigQuery Console: <code>SELECT * FROM dataset.table LIMIT 100</code> để xem cấu trúc dữ liệu CASA Churn.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d1-3">
@@ -214,15 +214,15 @@
                 <ul class="task-list">
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-1">
-                    Vẽ Histogram + Boxplot cho các biến số quan trọng (Hạn mức, Số dư, Độ tuổi, Số tháng không hoạt động) bằng Matplotlib/Seaborn.
+                    Vẽ Histogram + Boxplot cho các biến số quan trọng (Số dư CASA hiện tại, Tỷ lệ thay đổi số dư, Độ tuổi, Số tháng không giao dịch) bằng Matplotlib/Seaborn.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-2">
-                    Vẽ Countplot/Bar chart cho các biến phân loại (Giới tính, Hạng thẻ, Khu vực). Viết nhận xét nghiệp vụ bên dưới mỗi biểu đồ.
+                    Vẽ Countplot/Bar chart cho các biến phân loại (Giới tính, Nhận lương qua tài khoản, E-banking). Viết nhận xét nghiệp vụ bên dưới mỗi biểu đồ.
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w1-d3-3">
-                    Đề xuất 3-5 câu hỏi kinh doanh từ dữ liệu (VD: "Nhóm thẻ nào có tỷ lệ churn cao nhất?", "Có mối liên hệ giữa số tháng inactive và churn không?").
+                    Đề xuất 3-5 câu hỏi kinh doanh từ dữ liệu (VD: "Khách hàng không nhận lương có tỷ lệ churn cao hơn không?", "Có mối liên hệ giữa số dư CASA và churn không?").
                   </li>
                 </ul>
               </div>
@@ -334,7 +334,7 @@
                 <div class="deliverable-info">
                   <span class="deliverable-badge">Sản phẩm bàn giao Tuần 2</span>
                   <div class="deliverable-title">Python Dashboard &amp; Slide "Chân dung KH có nguy cơ churn"</div>
-                  <div class="deliverable-desc">Dashboard Python trực quan, slide 5 trang nghiệp vụ trình bày pattern churn từ data thực tế, kèm đề xuất hành động cho bộ phận Credit Card/CASA.</div>
+                  <div class="deliverable-desc">Dashboard Python trực quan, slide 5 trang nghiệp vụ trình bày pattern churn từ data thực tế, kèm đề xuất hành động cho bộ phận quản lý nguồn vốn CASA.</div>
                 </div>
                 <div style="display: flex; gap: 8px; align-items: center;">
                   <a href="#code-week-2" class="view-code-link-btn">
@@ -386,7 +386,7 @@
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w3-d1-2">
-                    Phân loại features thành các nhóm: Demographics (tuổi, giới tính), Transaction Behavior (số lần GD, giá trị GD), Product (hạng thẻ, số SP), Engagement (tháng inactive).
+                    Phân loại features thành các nhóm: Demographics (tuổi, giới tính), Transaction Behavior (số lần GD, giá trị GD), Product (tiết kiệm, thấu chi), Engagement (e-banking, tháng inactive).
                   </li>
                   <li class="task-item" onclick="toggleTaskCheckbox(this)">
                     <input type="checkbox" class="task-checkbox" data-task-id="w3-d1-3">
@@ -555,15 +555,15 @@
         <div class="tab-grid">
           
           <div>
-            <h2 style="font-size: 20px; margin-bottom: 12px;">Ngữ cảnh nghiệp vụ Churn Thẻ Tín Dụng</h2>
+            <h2 style="font-size: 20px; margin-bottom: 12px;">Ngữ cảnh nghiệp vụ CASA Churn</h2>
             <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
-              Tại ngân hàng NCB, việc giữ chân khách hàng (Customer Retention) có chi phí tối ưu hơn nhiều so với việc tìm kiếm khách hàng mới. Thẻ tín dụng là dòng sản phẩm mang lại doanh thu định kỳ lớn thông qua phí thường niên, lãi suất chi tiêu và phí xử lý giao dịch.
+              Tại ngân hàng NCB, việc giữ chân khách hàng (Customer Retention) có chi phí tối ưu hơn nhiều so với việc tìm kiếm khách hàng mới. Số dư tiền gửi không kỳ hạn (CASA) là dòng vốn giá rẻ đặc biệt quan trọng giúp ngân hàng tối ưu hóa biên lợi nhuận lãi thuần (NIM) và cung cấp nguồn vốn dồi dào tài trợ cho các hoạt động tín dụng.
             </p>
             
             <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius); margin-bottom: 24px;">
               <h3 style="font-size: 15px; margin-bottom: 8px; color: var(--ncb-red);">Định nghĩa khách hàng rời bỏ (Churn) trong thực tế:</h3>
               <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.5;">
-                Khách hàng chủ động gửi yêu cầu hủy thẻ tín dụng <strong>hoặc</strong> tài khoản thẻ không ghi nhận bất cứ phát sinh chi tiêu/thanh toán nào liên tiếp trong vòng 3 tháng gần nhất (gọi là tài khoản ngủ đông - dormant).
+                Khách hàng chủ động gửi yêu cầu đóng tài khoản thanh toán <strong>hoặc</strong> tài khoản không ghi nhận bất kỳ giao dịch tài chính chủ động nào (chuyển khoản, thanh toán, rút tiền) liên tiếp trong vòng 3 tháng gần nhất (gọi là tài khoản ngủ đông - dormant).
               </p>
             </div>
 
@@ -604,7 +604,7 @@
 
               <div class="sim-slider-group">
                 <div class="sim-label-row">
-                  <span>Số lần quẹt thẻ / năm</span>
+                  <span>Tần suất giao dịch / năm</span>
                   <span class="sim-value" id="val-trans-count">24 lần</span>
                 </div>
                 <input type="range" class="sim-slider" id="input-trans-count" min="2" max="150" value="24">
@@ -612,18 +612,18 @@
 
               <div class="sim-slider-group">
                 <div class="sim-label-row">
-                  <span>Số dư nợ thẻ (VND)</span>
-                  <span class="sim-value" id="val-balance">1,500,000đ</span>
+                  <span>Số dư CASA hiện tại (VND)</span>
+                  <span class="sim-value" id="val-balance">5,000,000đ</span>
                 </div>
-                <input type="range" class="sim-slider" id="input-balance" min="0" max="20000000" step="500000" value="1500000">
+                <input type="range" class="sim-slider" id="input-balance" min="0" max="50000000" step="500000" value="5000000">
               </div>
 
               <div class="sim-slider-group">
                 <div class="sim-label-row">
-                  <span>Hạn mức tín dụng (VND)</span>
-                  <span class="sim-value" id="val-limit">30,000,000đ</span>
+                  <span>Số dư tiền gửi tiết kiệm (VND)</span>
+                  <span class="sim-value" id="val-limit">10,000,000đ</span>
                 </div>
-                <input type="range" class="sim-slider" id="input-limit" min="5000000" max="100000000" step="1000000" value="30000000">
+                <input type="range" class="sim-slider" id="input-limit" min="0" max="100000000" step="5000000" value="10000000">
               </div>
 
               <!-- Output visual gauge -->
@@ -704,6 +704,7 @@
   </div>
 
   <!-- JavaScript Bundle -->
+  <script src="schema.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
