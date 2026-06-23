@@ -1,0 +1,39 @@
+Total FFFD chars: 457
+  U+0192 (CP1252 byte 0x83): 52 occurrences
+  U+2014 (CP1252 byte 0x97): 9 occurrences
+  U+2018 (CP1252 byte 0x91): 104 occurrences
+  U+2019 (CP1252 byte 0x92): 1 occurrences
+  U+201C (CP1252 byte 0x93): 15 occurrences
+  U+201D (CP1252 byte 0x94): 1 occurrences
+  U+2021 (CP1252 byte 0x87): 72 occurrences
+  U+2022 (CP1252 byte 0x95): 19 occurrences
+  U+2030 (CP1252 byte 0x89): 5 occurrences
+  U+2039 (CP1252 byte 0x8B): 24 occurrences
+  U+203A (CP1252 byte 0x9B): 29 occurrences
+  U+20AC (CP1252 byte 0x80): 1 occurrences
+  U+2122 (CP1252 byte 0x99): 52 occurrences
+
+Line 29: '            T�•ng quan & Tiến �‘�™'
+Line 51: '      <button class="theme-toggle" id="theme-toggle-btn" title="Đ�•i chế �‘�™ Sáng/T�‘i">'
+Line 67: '      <div class="top-title" id="page-title">T�•ng quan & Tiến �‘�™</div>'
+
+FFD pairs found:
+  FFFD+U+2018: 104 times
+  FFFD+U+2021: 72 times
+  FFFD+U+2122: 52 times
+  FFFD+U+0192: 52 times
+  FFFD+U+0111: 51 times
+  FFFD+U+203A: 29 times
+  FFFD+U+2039: 24 times
+  FFFD+U+2192: 20 times
+  FFFD+U+2022: 19 times
+  FFFD+U+201C: 15 times
+  FFFD+U+2014: 9 times
+  FFFD+U+2030: 5 times
+  FFFD+U+1EDF: 3 times
+  FFFD+U+20AC: 1 times
+  FFFD+U+0020: 1 times
+
+Standalone suspicious chars (not after FFFD):
+  Pos 8573: U+201D in: ard) của NCB �€” không cần xây
+  Pos 22805: U+2019 in: le: italic;">�ở’� Phần này khô

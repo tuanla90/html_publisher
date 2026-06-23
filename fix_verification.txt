@@ -1,0 +1,8 @@
+Remaining FFFD: 0
+Remaining suspicious CP1252 chars: 2
+
+Remaining issues:
+  Line 134, col 112: U+201D in: ...edit Card) của NCB Ề” không cần xây mới ...
+  Line 324, col 115: U+2019 in: ...nt-style: italic;">ở’ Phần này không bắt...
+
+Total changes: original had 56775 chars, fixed has 56318 chars
