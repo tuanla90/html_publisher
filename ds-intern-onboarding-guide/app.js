@@ -1,9 +1,23 @@
 /* ==========================================
+   GLOBAL CONFIGURATION & PARAM CONTROLS
+   ========================================== */
+const isMentor = typeof window !== 'undefined' && window.location && window.location.search &&
+  (new URLSearchParams(window.location.search).get('mentor') === 'true');
+
+/* ==========================================
    TAB TRANSITIONS
    ========================================== */
 const menuItems = document.querySelectorAll('.menu-item');
 const tabContents = document.querySelectorAll('.tab-content');
 const pageTitle = document.getElementById('page-title');
+
+// Hide mentor tab in menu sidebar if URL does not contain ?mentor=true
+if (!isMentor) {
+  const mentorMenuItem = document.querySelector('.menu-item[data-tab="evaluation"]');
+  if (mentorMenuItem) {
+    mentorMenuItem.style.display = 'none';
+  }
+}
 
 // Click on menu item updates the URL hash
 menuItems.forEach(item => {
@@ -60,7 +74,13 @@ function handleHashChange() {
     subWeek = parseInt(hash.split('-').pop());
   }
   
-  const finalTab = validTabs.includes(targetTab) ? targetTab : 'overview';
+  let finalTab = validTabs.includes(targetTab) ? targetTab : 'overview';
+  
+  // Guard evaluation tab if not mentor
+  if (finalTab === 'evaluation' && !isMentor) {
+    finalTab = 'overview';
+    window.location.hash = 'overview';
+  }
   
   const targetItem = document.querySelector(`.menu-item[data-tab="${finalTab}"]`);
   if (targetItem) {
@@ -389,6 +409,39 @@ function toggleCode(snippetId, btn) {
 /* ==========================================
    DYNAMIC CONTENT RENDERING FROM data.js
    ========================================== */
+/**
+ * Check if a code snippet is locked based on target date
+ * @param {string} id - Snippet ID (e.g. "code-1")
+ * @returns {boolean} True if locked, false if unlocked
+ */
+function isCodeLocked(id) {
+  if (!window.NCB_LOCK_CONFIG || !window.NCB_LOCK_CONFIG[id]) {
+    return false;
+  }
+  const lockDateStr = window.NCB_LOCK_CONFIG[id];
+  const now = new Date();
+  
+  // Get YYYY-MM-DD in local timezone
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const todayStr = `${year}-${month}-${day}`;
+  
+  return todayStr < lockDateStr;
+}
+
+/**
+ * Format YYYY-MM-DD to DD/MM/YYYY
+ * @param {string} dateStr - YYYY-MM-DD
+ * @returns {string} DD/MM/YYYY
+ */
+function formatDateVietnamese(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
 function renderDynamicContent() {
   const data = window.NCB_ROADMAP_DATA;
   if (!data) return;
@@ -422,16 +475,26 @@ function renderDynamicContent() {
 
   const codeContainer = document.getElementById('code-snippets-container');
   if (codeContainer && data.snippets) {
-    codeContainer.innerHTML = data.snippets.map(item => `
+    codeContainer.innerHTML = data.snippets.map(item => {
+      const locked = isCodeLocked(item.id);
+      const lockDateStr = window.NCB_LOCK_CONFIG ? window.NCB_LOCK_CONFIG[item.id] : null;
+      const formattedLockDate = formatDateVietnamese(lockDateStr);
+
+      return `
       <div class="snippet-card">
         <div class="snippet-header">
           <span class="snippet-title">${item.title}</span>
           <div style="display: flex; gap: 12px; align-items: center;">
-            <button class="toggle-code-btn" onclick="toggleCode('${item.id}', this)" style="background: none; border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; transition: var(--transition);">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="eye-icon"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-              <span>Hiện Code</span>
+            <button class="toggle-code-btn" ${locked ? 'disabled' : ''} onclick="toggleCode('${item.id}', this)" style="background: none; border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 4px; font-size: 12px; cursor: ${locked ? 'not-allowed' : 'pointer'}; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; transition: var(--transition);">
+              ${locked ? `
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="lock-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Khóa đến ${formattedLockDate}</span>
+              ` : `
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="eye-icon"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <span>Hiện Code</span>
+              `}
             </button>
-            <button class="copy-btn" onclick="copySnippet('${item.id}', this)">
+            <button class="copy-btn" onclick="copySnippet('${item.id}', this)" style="${locked ? 'display: none;' : ''}">
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
               <span>Sao Chép</span>
             </button>
@@ -454,12 +517,21 @@ function renderDynamicContent() {
           ` : ''}
         </div>
 
-        <!-- Code body starts hidden -->
-        <div class="snippet-body" style="display: none;">
-          <pre class="code-block" id="${item.id}"><code>${escapeHtml(item.code)}</code></pre>
-        </div>
+        ${locked ? `
+          <!-- Lock Banner (shows instead of code block) -->
+          <div class="lock-banner" style="display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--bg-primary); border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13.5px;">
+            <svg width="16" height="16" fill="none" stroke="var(--ncb-red)" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink: 0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Mã nguồn mẫu bị khóa cho đến ngày <strong style="color: var(--text-primary);">${formattedLockDate}</strong>. Intern vui lòng tự giải quyết bài toán trước thời hạn này!</span>
+          </div>
+        ` : `
+          <!-- Code body starts hidden -->
+          <div class="snippet-body" style="display: none;">
+            <pre class="code-block" id="${item.id}"><code>${escapeHtml(item.code)}</code></pre>
+          </div>
+        `}
       </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // 3. Render Evaluation Tab - Rubrics (renders as individual card inside the 2x2 grid)

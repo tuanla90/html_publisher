@@ -3,9 +3,19 @@ const fs = require('fs');
 // Mock a simple browser environment
 global.window = {
   addEventListener: () => {},
-  location: { hash: '#overview' }
+  location: { hash: '#overview', search: '' }
 };
 global.document = {
+  querySelector: (selector) => {
+    console.log(`Mock: querySelector(${selector})`);
+    if (selector.includes('[data-tab="evaluation"]')) {
+      return { style: {} };
+    }
+    if (selector.includes('[data-tab=')) {
+      return { addEventListener: () => {}, textContent: 'Overview', getAttribute: () => 'overview', classList: { add: () => {}, remove: () => {} } };
+    }
+    return null;
+  },
   querySelectorAll: (selector) => {
     console.log(`Mock: querySelectorAll(${selector})`);
     if (selector === '.menu-item') return [{ addEventListener: () => {}, textContent: 'Overview', getAttribute: () => 'overview' }];
@@ -50,6 +60,11 @@ global.Event = function(name) { return { name }; };
 console.log("=== Loading schema.js ===");
 const schemaCode = fs.readFileSync('schema.js', 'utf8');
 eval(schemaCode);
+
+// Run config.js
+console.log("=== Loading config.js ===");
+const configCode = fs.readFileSync('config.js', 'utf8');
+eval(configCode);
 
 // Run data.js
 console.log("=== Loading data.js ===");
