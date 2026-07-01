@@ -214,12 +214,17 @@
                 <!-- Tab Content 1 -->
                 <div id="solution1" class="tab-content border border-slate-200 bg-white rounded-xl overflow-hidden">
                     <div class="p-6 border-b border-slate-100">
-                        <h3 class="text-lg font-semibold flex items-center gap-2">
-                            Decision Engine Tự Vận Hành
-                        </h3>
-                        <p class="text-sm text-slate-500 mt-1">
-                            DE tự động sinh lệnh Create File trên Bucket &rarr; Call Bigquery Exec &rarr; Tạo Shared Link &rarr; Gửi Email cho KHUT.
-                        </p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold flex items-center gap-2">
+                                    Decision Engine Tự Vận Hành
+                                </h3>
+                                <p class="text-sm text-slate-500 mt-1">
+                                    DE tự động sinh lệnh Create File trên Bucket &rarr; Call Bigquery Exec &rarr; Tạo Shared Link &rarr; Gửi Email cho KHUT.
+                                </p>
+                            </div>
+                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-md text-sm font-medium border border-rose-200">Không khuyến nghị</span>
+                        </div>
                     </div>
                     <div class="p-6 space-y-6 bg-slate-50/50">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -240,9 +245,6 @@
                                     <li>Dữ liệu output không nằm trên Data Platform chuẩn để có thể tái sử dụng sau này.</li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-md text-sm font-medium border border-rose-200">Không khuyến nghị</span>
                         </div>
                     </div>
                 </div>
@@ -320,34 +322,35 @@
                         </p>
                     </div>
                     <div class="p-6">
-                        <div class="flex flex-col md:flex-row items-center gap-6 p-8 rounded-xl border border-slate-100 bg-slate-50/50">
-                            <!-- DE Side -->
-                            <div class="flex-1 text-center space-y-2">
-                                <div class="mx-auto w-14 h-14 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-4 border border-orange-200 shadow-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-xl border border-slate-100 bg-slate-50/50 mb-6">
+                            <div class="flex flex-col items-center text-center p-6 rounded-xl bg-white border border-blue-100 shadow-sm">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-600 mb-3">
                                     <i data-lucide="database" class="w-6 h-6"></i>
                                 </div>
-                                <h4 class="font-medium text-sm text-slate-800">Decision Engine</h4>
-                                <p class="text-xs text-slate-500">Truy vấn BigQuery/DB của DE</p>
-                            </div>
-                            
-                            <!-- Middle Actions -->
-                            <div class="flex-1 flex flex-col items-center gap-3 text-slate-500">
-                                <div class="flex items-center gap-2 text-xs font-medium bg-white px-3 py-1 rounded border shadow-sm">
+                                <h4 class="font-semibold text-blue-800 text-sm mb-1">Scope: Data Platform</h4>
+                                <p class="text-xs text-slate-500 mb-4">Truy vấn tải file từ BigQuery</p>
+                                <div class="flex items-center gap-2 text-xs font-medium bg-slate-50 px-3 py-1 rounded border shadow-sm text-slate-600">
                                     <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> Download CSV
                                 </div>
-                                <i data-lucide="arrow-right" class="w-6 h-6 text-orange-400 my-1"></i>
-                                <div class="flex items-center gap-2 text-xs font-medium bg-white px-3 py-1 rounded border shadow-sm">
-                                    <i data-lucide="upload-cloud" class="w-4 h-4 text-blue-600"></i> Manual Upload
-                                </div>
                             </div>
-
-                            <!-- DP Side -->
-                            <div class="flex-1 text-center space-y-2">
-                                <div class="mx-auto w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 border border-blue-200 shadow-sm">
+                            
+                            <div class="flex flex-col items-center text-center p-6 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                                <div class="p-3 rounded-full bg-indigo-100 text-indigo-600 mb-3">
                                     <i data-lucide="database" class="w-6 h-6"></i>
                                 </div>
-                                <h4 class="font-medium text-sm text-slate-800">Data Platform</h4>
-                                <p class="text-xs text-slate-500">Thực hiện Join Contract thủ công</p>
+                                <h4 class="font-semibold text-indigo-800 text-sm mb-1">Scope: DE (Nguyệt)</h4>
+                                <p class="text-xs text-slate-500 mb-4">Truy vấn tải file từ Database DE</p>
+                                <div class="flex items-center gap-2 text-xs font-medium bg-slate-50 px-3 py-1 rounded border shadow-sm text-slate-600">
+                                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> Download CSV
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center gap-3 mt-4">
+                            <i data-lucide="arrow-down" class="w-6 h-6 text-slate-400"></i>
+                            <div class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-50 text-blue-700 rounded-xl border border-blue-200 shadow-sm">
+                                <i data-lucide="upload-cloud" class="w-5 h-5"></i> 
+                                <span class="text-sm font-medium">Manual Upload lên Data Platform để Join Contract Data</span>
                             </div>
                         </div>
                     </div>
