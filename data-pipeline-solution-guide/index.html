@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priority Customer Data Pipeline Architecture</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2563eb',
+                            foreground: '#ffffff',
+                        },
+                        muted: {
+                            DEFAULT: '#f1f5f9',
+                            foreground: '#64748b',
+                        },
+                        border: '#e2e8f0',
+                        card: '#ffffff',
+                        background: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+        }
+
+        /* Hover Card Animations */
+        .hover-card-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(0.95);
+            transition: all 0.2s ease-out;
+        }
+
+        .hover-trigger:hover .hover-card-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Tab Transitions */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-900 p-6 md:p-12 lg:p-24 antialiased">
+
+    <div class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Header -->
+        <header class="space-y-4 text-center">
+            <span class="inline-block border border-blue-200 text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-sm font-medium">
+                Data Architecture Review
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+                Priority Customer Data Pipeline
+            </h1>
+            <p class="text-slate-500 max-w-2xl mx-auto text-lg">
+                Tài liệu mô tả luồng xử lý dữ liệu từ KHUT (Phòng Khách hàng Ưu tiên), qua Data Platform, tới Decision Engine và giải pháp phân phối kết quả đầu ra.
+            </p>
+        </header>
+
+        <!-- Current Architecture Section -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-semibold tracking-tight">1. Luồng Dữ Liệu Hiện Tại</h2>
+                <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-md text-sm font-medium border border-slate-200">Đã hoàn thành</span>
+            </div>
+            
+            <div class="border border-slate-200 shadow-sm bg-white rounded-xl p-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+                    
+                    <!-- Node 1: KHUT -->
+                    <div class="relative hover-trigger flex flex-col items-center gap-3 p-6 rounded-xl border border-slate-100 bg-white shadow-sm cursor-pointer w-48 transition hover:scale-105 hover:shadow-md hover:border-blue-200">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="font-semibold">KHUT</h4>
+                            <p class="text-xs text-slate-500 mt-1">Upload Data Portal</p>
+                        </div>
+
+                        <!-- Hover Card -->
+                        <div class="hover-card-content absolute top-full mt-4 left-1/2 -translate-x-1/2 w-72 z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl text-left cursor-default">
+                            <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-200 rotate-45"></div>
+                            <h4 class="font-semibold text-sm mb-2 relative z-10">Phòng Khách Hàng Ưu Tiên</h4>
+                            <p class="text-sm text-slate-600 relative z-10">Thực hiện upload danh sách ngoại lệ qua cổng Data Portal.</p>
+                            <div class="flex items-center gap-2 mt-3 text-xs font-medium text-amber-600 bg-amber-50 p-2 rounded relative z-10">
+                                <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                SLA: 5 ngày đầu tháng
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="hidden md:flex flex-1 items-center justify-center text-slate-300">
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </div>
+
+                    <!-- Node 2: DP -->
+                    <div class="relative hover-trigger flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-blue-200 bg-blue-50/50 shadow-sm cursor-pointer w-48 transition hover:scale-105 hover:shadow-md">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-700">
+                            <i data-lucide="database" class="w-8 h-8"></i>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="font-semibold text-blue-900">Data Platform</h4>
+                            <p class="text-xs text-blue-700/80 mt-1">BigQuery (Minh & Chung)</p>
+                        </div>
+
+                        <!-- Hover Card -->
+                        <div class="hover-card-content absolute top-full mt-4 left-1/2 -translate-x-1/2 w-80 z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl text-left cursor-default">
+                            <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-200 rotate-45"></div>
+                            <h4 class="font-semibold text-sm mb-2 relative z-10">Data Platform (DP)</h4>
+                            <div class="text-sm text-slate-600 space-y-2 relative z-10">
+                                <p>Nơi tập trung dữ liệu Single Source of Truth.</p>
+                                <ul class="list-disc pl-4 space-y-1 text-xs">
+                                    <li>Nhận dữ liệu upload từ KHUT</li>
+                                    <li>Gửi email thông báo</li>
+                                    <li><strong>Full Join:</strong> Hành vi T.trước + Hạng T.trước + Ngoại lệ</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="hidden md:flex flex-1 items-center justify-center text-slate-300">
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </div>
+
+                    <!-- Node 3: DE -->
+                    <div class="relative hover-trigger flex flex-col items-center gap-3 p-6 rounded-xl border border-slate-100 bg-white shadow-sm cursor-pointer w-48 transition hover:scale-105 hover:shadow-md hover:border-indigo-200">
+                        <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                            <i data-lucide="server" class="w-8 h-8"></i>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="font-semibold">Decision Engine</h4>
+                            <p class="text-xs text-slate-500 mt-1">Scope Down Logic</p>
+                        </div>
+
+                        <!-- Hover Card -->
+                        <div class="hover-card-content absolute top-full mt-4 left-1/2 -translate-x-1/2 w-72 z-50 rounded-lg border border-slate-200 bg-white p-4 shadow-xl text-left cursor-default">
+                            <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-t border-l border-slate-200 rotate-45"></div>
+                            <h4 class="font-semibold text-sm mb-2 relative z-10">Decision Engine (DE)</h4>
+                            <div class="text-sm text-slate-600 space-y-2 relative z-10">
+                                <p>Đọc bảng dữ liệu input từ Data Platform.</p>
+                                <ul class="list-disc pl-4 space-y-1 text-xs">
+                                    <li>Áp dụng điều kiện lọc (vài chục nghìn KH).</li>
+                                    <li>Chạy batch (vài trăm KH/lần).</li>
+                                    <li>Ghi kết quả vào BQ(DE) và DB(DE).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions Section -->
+        <section class="space-y-6 pt-8">
+            <div class="space-y-2">
+                <h2 class="text-2xl font-semibold tracking-tight">2. Giải Pháp Phân Phối Output</h2>
+                <p class="text-slate-500">
+                    Mục tiêu: Trả về 2 file (Danh sách khách hàng ưu tiên & Chi tiết hợp đồng) cho phòng KHUT.
+                </p>
+            </div>
+
+            <div class="w-full">
+                <!-- Tab Headers -->
+                <div class="grid w-full grid-cols-1 md:grid-cols-3 gap-2 p-1 bg-slate-200/60 rounded-xl mb-6">
+                    <button onclick="openTab('solution1')" id="btn-solution1" class="tab-btn py-3 px-4 rounded-lg text-sm font-medium transition-all text-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400">Cách 1: DE tự sinh file</button>
+                    <button onclick="openTab('solution2')" id="btn-solution2" class="tab-btn py-3 px-4 rounded-lg text-sm font-medium transition-all bg-white text-blue-700 shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">Cách 2: ETL về DP (Đề xuất)</button>
+                    <button onclick="openTab('backup')" id="btn-backup" class="tab-btn py-3 px-4 rounded-lg text-sm font-medium transition-all text-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-400">Backup: Manual ngắn hạn</button>
+                </div>
+                
+                <!-- Tab Content 1 -->
+                <div id="solution1" class="tab-content border border-slate-200 bg-white rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-slate-100">
+                        <h3 class="text-lg font-semibold flex items-center gap-2">
+                            Decision Engine Tự Vận Hành
+                        </h3>
+                        <p class="text-sm text-slate-500 mt-1">
+                            DE tự động sinh lệnh Create File trên Bucket &rarr; Call Bigquery Exec &rarr; Tạo Shared Link &rarr; Gửi Email cho KHUT.
+                        </p>
+                    </div>
+                    <div class="p-6 space-y-6 bg-slate-50/50">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-100">
+                                <h4 class="font-semibold text-emerald-700 mb-2 flex items-center gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i> Ưu điểm
+                                </h4>
+                                <p class="text-sm text-emerald-800">
+                                    Nhanh và liền mạch. Không cần thời gian chờ đợi vì hệ thống DE biết chính xác khi nào tiến trình xử lý xong để kích hoạt luồng xuất file tiếp theo.
+                                </p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-rose-50 border border-rose-100">
+                                <h4 class="font-semibold text-rose-700 mb-2 flex items-center gap-2">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i> Nhược điểm
+                                </h4>
+                                <ul class="text-sm text-rose-800 list-disc pl-4 space-y-1">
+                                    <li>Thiếu xử lý tạo danh sách chi tiết hợp đồng (nếu DE làm thì bị sai scope công việc, khó maintain).</li>
+                                    <li>Dữ liệu output không nằm trên Data Platform chuẩn để có thể tái sử dụng sau này.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-md text-sm font-medium border border-rose-200">Không khuyến nghị</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 2 (Default Active) -->
+                <div id="solution2" class="tab-content active border border-blue-200 shadow-md bg-white rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-slate-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-blue-700 flex items-center gap-2">
+                                    Đồng Bộ Ngược (ETL) Về Data Platform
+                                </h3>
+                                <p class="text-sm text-slate-500 mt-1">
+                                    Luồng xử lý tuân thủ Policy bảo mật: DE chỉ có quyền ghi sang Project DE. Dữ liệu contract nằm ở Project DP. Không được cross-join.
+                                </p>
+                            </div>
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-medium">Khuyến nghị</span>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <!-- Steps -->
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold border border-blue-200">1</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Job ETL Kéo Dữ Liệu</h4>
+                                    <p class="text-sm text-slate-500 mt-1">Xây dựng luồng ETL đồng bộ dữ liệu output (Danh sách phân hạng) từ Project DE về lại Project DP.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold border border-blue-200">2</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Join Contract Data (Single Source of Truth)</h4>
+                                    <p class="text-sm text-slate-500 mt-1">Tại Project DP, thực hiện join danh sách khách hàng vừa kéo về với bảng Contract Data để tạo ra thông tin chi tiết hợp đồng.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold border border-blue-200">3</div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800">Xuất File & Phân Phối</h4>
+                                    <p class="text-sm text-slate-500 mt-1">Tạo 2 file CSV (Danh sách khách hàng & Chi tiết hợp đồng) và gửi qua email cho KHUT.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Plan -->
+                        <div class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200">
+                            <h4 class="font-semibold mb-4 text-slate-800">Kế Hoạch Thực Thi (Action Plan)</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-24 text-center border border-slate-300 text-slate-600 bg-white text-xs py-1 rounded">Data Eng.</span>
+                                    <span class="text-sm text-slate-700">Thiết lập luồng ETL kéo data từ DE &rarr; DP.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-24 text-center border border-slate-300 text-slate-600 bg-white text-xs py-1 rounded">Data Eng.</span>
+                                    <span class="text-sm text-slate-700">Viết script join bảng Contract Data tại DP.</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-24 text-center border border-amber-300 text-amber-700 bg-amber-50 text-xs py-1 rounded">Cải tiến</span>
+                                    <span class="text-sm text-slate-700">Nghiên cứu giải pháp tự động hóa luồng xuất file CSV và gửi Email từ DP.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 3 -->
+                <div id="backup" class="tab-content border border-slate-200 bg-white rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-slate-100">
+                        <h3 class="text-lg font-semibold flex items-center gap-2 text-slate-800">
+                            Phương Án Chữa Cháy (Short-term)
+                        </h3>
+                        <p class="text-sm text-slate-500 mt-1">
+                            Áp dụng trong thời gian chờ xây dựng xong luồng Job ETL tự động.
+                        </p>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-col md:flex-row items-center gap-6 p-8 rounded-xl border border-slate-100 bg-slate-50/50">
+                            <!-- DE Side -->
+                            <div class="flex-1 text-center space-y-2">
+                                <div class="mx-auto w-14 h-14 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-4 border border-orange-200 shadow-sm">
+                                    <i data-lucide="database" class="w-6 h-6"></i>
+                                </div>
+                                <h4 class="font-medium text-sm text-slate-800">Decision Engine</h4>
+                                <p class="text-xs text-slate-500">Truy vấn BigQuery/DB của DE</p>
+                            </div>
+                            
+                            <!-- Middle Actions -->
+                            <div class="flex-1 flex flex-col items-center gap-3 text-slate-500">
+                                <div class="flex items-center gap-2 text-xs font-medium bg-white px-3 py-1 rounded border shadow-sm">
+                                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> Download CSV
+                                </div>
+                                <i data-lucide="arrow-right" class="w-6 h-6 text-orange-400 my-1"></i>
+                                <div class="flex items-center gap-2 text-xs font-medium bg-white px-3 py-1 rounded border shadow-sm">
+                                    <i data-lucide="upload-cloud" class="w-4 h-4 text-blue-600"></i> Manual Upload
+                                </div>
+                            </div>
+
+                            <!-- DP Side -->
+                            <div class="flex-1 text-center space-y-2">
+                                <div class="mx-auto w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-4 border border-blue-200 shadow-sm">
+                                    <i data-lucide="database" class="w-6 h-6"></i>
+                                </div>
+                                <h4 class="font-medium text-sm text-slate-800">Data Platform</h4>
+                                <p class="text-xs text-slate-500">Thực hiện Join Contract thủ công</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- Script to Initialize Icons and handle Tabs -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Handle Tab Switching
+        function openTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Reset all buttons style
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-white', 'text-blue-700', 'shadow', 'shadow-sm');
+                el.classList.add('text-slate-600');
+            });
+
+            // Show active content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight active button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-slate-600');
+            activeBtn.classList.add('bg-white', 'text-blue-700', 'shadow', 'shadow-sm');
+        }
+    </script>
+</body>
+</html>
