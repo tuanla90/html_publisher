@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#12924A">
 <title>Máy tập theo buổi — Bài tập tại nhà</title>
 <style>
   :root{
@@ -59,7 +54,7 @@
   .tip{ font-size:.82rem; color:var(--muted); margin:16px auto 0; max-width:38ch; }
 
   .stagewrap{ display:flex; flex-direction:column; align-items:center; text-align:center; }
-  .illo{ background:var(--surface-2); border-radius:16px; width:100%; max-width:270px; margin:0 auto 10px; }
+  .illo{ background:var(--surface-2); border-radius:16px; width:100%; max-width:270px; margin:0 auto 10px; overflow:hidden; }
   svg.fig{ display:block; width:100%; height:auto; }
   .exname{ font-size:1.5rem; font-weight:800; letter-spacing:-.01em; margin:4px 0 6px; text-wrap:balance; }
   .exnote{ color:var(--muted); margin:0 auto 6px; max-width:34ch; font-size:.95rem; }
@@ -87,6 +82,10 @@
   .btn.primary.ready{ animation:pulse 1.1s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.04); } }
 
+  .vlink{ display:inline-flex; align-items:center; gap:6px; font-size:.84rem; font-weight:600; color:var(--accent-strong); text-decoration:none; margin-top:14px; border-bottom:1.5px solid transparent; }
+  .vlink:hover{ border-bottom-color:var(--accent); }
+  .vlink:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:3px; }
+
   .done{ text-align:center; }
   .cheer{ font-size:3rem; }
   .statgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0; }
@@ -98,13 +97,10 @@
   .fhead{ fill:var(--accent); }
   .floor{ stroke:var(--hairline-strong); stroke-width:3.5; stroke-linecap:round; }
   .kit{ stroke:var(--muted); stroke-width:5; stroke-linecap:round; fill:none; }
-  .arrow{ stroke:var(--accent-strong); stroke-width:3.2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
   .guide{ stroke:var(--muted); stroke-width:2; stroke-dasharray:3 6; opacity:.6; }
 
   @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
-</head>
-<body>
 
 <noscript><p style="text-align:center;font-family:sans-serif">Cần bật JavaScript để dùng máy tập.</p></noscript>
 
@@ -114,29 +110,107 @@
 </div></div>
 
 <script>
+/* ---- animated stick-figure engine (shared with the guide) ---- */
+(function(){
+  "use strict";
+  var NS="http://www.w3.org/2000/svg";
+  var SPECS={
+    warm:{floorY:144,dur:1100,head:[120,34,120,33,11],bones:[
+      {a:[120,45,120,92],b:[120,45,120,92]},
+      {a:[120,60,98,80],b:[120,60,100,44]},
+      {a:[120,60,142,44],b:[120,60,140,80]},
+      {a:[120,92,110,124],b:[120,92,112,116]},
+      {a:[110,124,110,143],b:[112,116,112,140]},
+      {a:[120,92,132,116],b:[120,92,130,124]},
+      {a:[132,116,132,140],b:[130,124,130,143]}
+    ]},
+    squat:{floorY:144,dur:1500,head:[130,46,126,20,11],bones:[
+      {a:[112,142,146,142],b:[112,142,146,142]},
+      {a:[120,142,150,106],b:[120,142,126,100]},
+      {a:[150,106,106,104],b:[126,100,118,68]},
+      {a:[106,104,126,58],b:[118,68,122,32]},
+      {a:[126,58,168,70],b:[122,32,162,44]}
+    ]},
+    pushup:{floorY:144,dur:1400,kit:[[148,108,214,108],[158,108,158,143],[206,108,206,143]],head:[164,86,164,101,10],bones:[
+      {a:[34,142,52,142],b:[34,142,52,142]},
+      {a:[44,140,150,92],b:[44,140,150,107]},
+      {a:[150,92,166,106],b:[150,107,166,106]}
+    ]},
+    bridge:{floorY:144,dur:1500,head:[52,133,52,133,10],bones:[
+      {a:[64,141,120,104],b:[64,141,120,132]},
+      {a:[120,104,152,110],b:[120,132,152,131]},
+      {a:[152,110,152,140],b:[152,131,152,140]},
+      {a:[152,140,172,140],b:[152,140,172,140]}
+    ]},
+    superman:{floorY:144,dur:1600,head:[153,129,153,133,9],bones:[
+      {a:[96,137,140,136],b:[96,137,140,136]},
+      {a:[140,136,183,120],b:[140,136,183,138]},
+      {a:[96,137,52,120],b:[96,137,52,138]}
+    ]},
+    plank:{floorY:144,dur:2600,head:[62,104,62,106,9],bones:[
+      {a:[72,142,104,142],b:[72,142,104,142]},
+      {a:[72,142,74,108],b:[72,142,74,110]},
+      {a:[72,106,182,126],b:[72,108,182,128],cls:"guide"},
+      {a:[74,108,178,128],b:[74,110,178,130]},
+      {a:[178,128,186,142],b:[178,130,186,142]}
+    ]},
+    mtn:{floorY:144,dur:900,head:[181,96,181,96,9],bones:[
+      {a:[168,142,168,100],b:[168,142,168,100]},
+      {a:[168,100,104,112],b:[168,100,104,112]},
+      {a:[104,112,80,126],b:[104,112,128,120]},
+      {a:[80,126,58,141],b:[128,120,114,141]},
+      {a:[104,112,128,120],b:[104,112,80,126]},
+      {a:[128,120,114,141],b:[80,126,58,141]}
+    ]}
+  };
+  var FIGS=[]; var reduce=false;
+  try{ reduce=window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){}
+  function mk(tag,cls){ var e=document.createElementNS(NS,tag); if(cls) e.setAttribute("class",cls); return e; }
+  function setL(e,x1,y1,x2,y2){ e.setAttribute("x1",x1); e.setAttribute("y1",y1); e.setAttribute("x2",x2); e.setAttribute("y2",y2); }
+  function lerp(a,b,t){ return (a+(b-a)*t).toFixed(2); }
+  function draw(fig,t){ var s=fig.spec,i,b;
+    for(i=0;i<s.bones.length;i++){ b=s.bones[i]; setL(fig.els[i], lerp(b.a[0],b.b[0],t), lerp(b.a[1],b.b[1],t), lerp(b.a[2],b.b[2],t), lerp(b.a[3],b.b[3],t)); }
+    var h=s.head; fig.head.setAttribute("cx",lerp(h[0],h[2],t)); fig.head.setAttribute("cy",lerp(h[1],h[3],t)); fig.head.setAttribute("r",h[4]);
+  }
+  function build(host){
+    var id=host.getAttribute("data-fig"); var spec=SPECS[id]; if(!spec){ return; }
+    var variant=host.getAttribute("data-variant")||"";
+    var svg=mk("svg","fig"+(variant?" "+variant:"")); svg.setAttribute("viewBox","0 0 240 160"); svg.setAttribute("aria-hidden","true");
+    if(spec.floorY){ var f=mk("line","floor"); setL(f,24,spec.floorY,216,spec.floorY); svg.appendChild(f); }
+    (spec.kit||[]).forEach(function(k){ var e=mk("line","kit"); setL(e,k[0],k[1],k[2],k[3]); svg.appendChild(e); });
+    var els=spec.bones.map(function(b){ var e=mk("line",b.cls||"fline"); svg.appendChild(e); return e; });
+    var head=mk("circle","fhead"); svg.appendChild(head);
+    host.appendChild(svg); host.setAttribute("data-built","1");
+    var fig={spec:spec,els:els,head:head,svg:svg}; draw(fig,0); FIGS.push(fig);
+  }
+  function frame(now){
+    for(var i=FIGS.length-1;i>=0;i--){ var fig=FIGS[i];
+      if(!fig.svg.isConnected){ FIGS.splice(i,1); continue; }
+      var dur=fig.spec.dur||1500; var ph=(now%dur)/dur; var t=0.5-0.5*Math.cos(ph*6.283185307);
+      draw(fig,t);
+    }
+    requestAnimationFrame(frame);
+  }
+  function hydrate(){ var list=document.querySelectorAll("[data-fig]:not([data-built])"); for(var i=0;i<list.length;i++){ build(list[i]); } }
+  window.hydrateFigures=hydrate;
+  if(!reduce){ requestAnimationFrame(frame); }
+})();
+</script>
+
+<script>
 (function(){
   "use strict";
   var app=document.getElementById('app');
 
   var EX=[
-    {id:'squat',name:'Squat',type:'reps',target:12,note:'Đẩy hông ra sau, đùi song song sàn, dồn lực vào gót.'},
-    {id:'pushup',name:'Chống đẩy nghiêng',type:'reps',target:10,note:'Tay trên bàn, người thẳng một đường từ đầu tới gót.'},
-    {id:'bridge',name:'Cầu mông',type:'reps',target:15,note:'Đạp gót nâng hông, siết mông giữ 2 giây.'},
-    {id:'superman',name:'Superman',type:'reps',target:12,note:'Nằm sấp, nhấc nhẹ tay & chân — bụng vẫn chạm sàn.'},
-    {id:'plank',name:'Plank',type:'timed',sec:30,note:'Người thẳng từ đầu tới gót, siết bụng, thở đều.'},
-    {id:'mtn',name:'Leo núi tại chỗ',type:'timed',sec:40,note:'Kéo gối lần lượt về ngực, chậm & đúng.'}
+    {id:'squat',name:'Squat',type:'reps',target:12,note:'Đẩy hông ra sau, đùi song song sàn, dồn lực vào gót.',mw:'https://musclewiki.com/exercise/bodyweight-squat'},
+    {id:'pushup',name:'Chống đẩy nghiêng',type:'reps',target:10,note:'Tay trên bàn, người thẳng một đường từ đầu tới gót.',mw:'https://musclewiki.com/exercise/incline-push-up'},
+    {id:'bridge',name:'Cầu mông',type:'reps',target:15,note:'Đạp gót nâng hông, siết mông giữ 2 giây.',mw:'https://musclewiki.com/exercise/glute-bridge'},
+    {id:'superman',name:'Superman',type:'reps',target:12,note:'Nằm sấp, nhấc nhẹ tay & chân — bụng vẫn chạm sàn.',mw:'https://musclewiki.com/exercise/supermans'},
+    {id:'plank',name:'Plank',type:'timed',sec:30,note:'Người thẳng từ đầu tới gót, siết bụng, thở đều.',mw:'https://musclewiki.com/exercise/forearm-plank'},
+    {id:'mtn',name:'Leo núi tại chỗ',type:'timed',sec:40,note:'Kéo gối lần lượt về ngực, chậm & đúng.',mw:'https://musclewiki.com/exercise/mountain-climber'}
   ];
   var WARM={id:'warm',name:'Khởi động',type:'timed',sec:180,note:'Giậm chân, xoay khớp cổ–vai–hông–gối, vài squat nhẹ.'};
-
-  var ILLO={
-    warm:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><circle class="fhead" cx="120" cy="34" r="11"/><line class="fline" x1="120" y1="45" x2="120" y2="92"/><line class="fline" x1="120" y1="60" x2="95" y2="78"/><line class="fline" x1="120" y1="60" x2="146" y2="44"/><line class="fline" x1="120" y1="92" x2="104" y2="130"/><line class="fline" x1="104" y1="130" x2="104" y2="143"/><line class="fline" x1="120" y1="92" x2="138" y2="118"/><line class="fline" x1="138" y1="118" x2="138" y2="143"/><path class="arrow" d="M150 40 a20 20 0 1 1 -7 -12"/><path class="arrow" d="M143 26 l3 3 -4 3"/>',
-    squat:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><line class="fline" x1="112" y1="142" x2="146" y2="142"/><line class="fline" x1="120" y1="142" x2="150" y2="106"/><line class="fline" x1="150" y1="106" x2="106" y2="104"/><line class="guide" x1="98" y1="106" x2="162" y2="106"/><line class="fline" x1="106" y1="104" x2="126" y2="58"/><line class="fline" x1="126" y1="58" x2="168" y2="70"/><circle class="fhead" cx="130" cy="46" r="11"/>',
-    pushup:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><line class="kit" x1="148" y1="108" x2="214" y2="108"/><line class="kit" x1="158" y1="108" x2="158" y2="143"/><line class="kit" x1="206" y1="108" x2="206" y2="143"/><line class="fline" x1="34" y1="142" x2="52" y2="142"/><line class="fline" x1="44" y1="140" x2="150" y2="96"/><circle class="fhead" cx="163" cy="90" r="10"/><line class="fline" x1="150" y1="96" x2="166" y2="106"/>',
-    bridge:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><circle class="fhead" cx="52" cy="133" r="10"/><line class="fline" x1="64" y1="141" x2="120" y2="104"/><line class="fline" x1="120" y1="104" x2="152" y2="110"/><line class="fline" x1="152" y1="110" x2="152" y2="142"/><line class="fline" x1="152" y1="142" x2="172" y2="142"/><path class="arrow" d="M120 94 v-12 M115 88 l5 -5 5 5"/>',
-    superman:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><line class="fline" x1="96" y1="137" x2="140" y2="136"/><circle class="fhead" cx="153" cy="131" r="9"/><line class="fline" x1="140" y1="136" x2="183" y2="122"/><line class="fline" x1="96" y1="137" x2="52" y2="123"/><path class="arrow" d="M186 116 v-11 M181 110 l5 -5 5 5"/><path class="arrow" d="M49 117 v-11 M44 111 l5 -5 5 5"/>',
-    plank:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><line class="fline" x1="72" y1="142" x2="104" y2="142"/><line class="fline" x1="72" y1="142" x2="74" y2="108"/><line class="guide" x1="72" y1="106" x2="182" y2="126"/><line class="fline" x1="74" y1="108" x2="178" y2="128"/><line class="fline" x1="178" y1="128" x2="186" y2="142"/><circle class="fhead" cx="62" cy="104" r="9"/>',
-    mtn:'<line class="floor" x1="24" y1="144" x2="216" y2="144"/><line class="fline" x1="168" y1="142" x2="168" y2="100"/><circle class="fhead" cx="181" cy="96" r="9"/><line class="fline" x1="168" y1="100" x2="104" y2="112"/><line class="fline" x1="104" y1="112" x2="58" y2="141"/><line class="fline" x1="104" y1="112" x2="128" y2="120"/><line class="fline" x1="128" y1="120" x2="114" y2="141"/><path class="arrow" d="M92 128 h20 M104 122 l-7 6 7 6"/>'
-  };
 
   var C=2*Math.PI*52; // ring circumference (r=52)
   var S={ phase:'intro', round:1, exIndex:0, count:0, duration:0, remaining:0, endAt:0,
@@ -190,7 +264,7 @@
     if(ex.type==='timed'){ startTimer(ex.sec); } else { stopTimer(); } }
   function moveNext(){ if(S.exIndex<EX.length-1){ S.exIndex++; startExercise(); }
     else { S.stats.roundsDone=S.round; if(S.round<S.cfg.rounds){ startRest(); } else { finishSession(); } } }
-  function advance(auto){ var ex=EX[S.exIndex]; if(S.phase==='exercise' && ex.type==='reps' && auto!==false){ /*noop*/ }
+  function advance(auto){ var ex=EX[S.exIndex];
     if(S.phase==='exercise' && ex.type==='reps'){ S.stats.reps+=S.count; } stopTimer(); moveNext(); }
   function skipCurrent(){ if(S.phase==='exercise'){ stopTimer(); moveNext(); }
     else if(S.phase==='rest'){ stopTimer(); endRest(); }
@@ -205,7 +279,8 @@
     return '<div class="dial"><svg class="ringsvg" viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/>'+
       '<circle class="ring-fg" id="ringfg" cx="60" cy="60" r="52" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'"/></svg>'+
       '<div class="dial-c"><div class="dial-num" id="dialnum">'+num+'</div><div class="dial-sub">'+(sub||'')+'</div></div></div>'; }
-  function figure(id){ return '<div class="illo"><svg class="fig" viewBox="0 0 240 160" aria-hidden="true">'+ILLO[id]+'</svg></div>'; }
+  function figure(id){ return '<div class="illo" data-fig="'+id+'"></div>'; }
+  function mwLink(url){ return url ? '<a class="vlink" href="'+url+'" target="_blank" rel="noopener">▶ Xem người thật tập (MuscleWiki)</a>' : ''; }
   function seg(k,n,cur,suf){ return '<button class="seg'+(n===cur?' on':'')+'" data-action="cfg" data-k="'+k+'" data-v="'+n+'">'+n+(suf||'')+'</button>'; }
   function fmtTime(ms){ var s=Math.round(ms/1000); var m=Math.floor(s/60); s=s%60; return m+':'+(s<10?'0':'')+s; }
   function progressPct(){ if(S.phase==='intro') return 0; if(S.phase==='done') return 100;
@@ -233,7 +308,7 @@
   function stageHTML(){
     if(S.phase==='intro'){
       return '<div class="intro"><p class="eyebrow">Bài tập thân trọng · Phase 1</p><h1>Máy tập theo buổi</h1>'+
-        '<p class="lede">Dẫn bạn qua cả buổi: khởi động → 6 động tác × số vòng. Tự bấm giờ cho plank & leo núi, chạm màn hình đếm số lần cho các bài còn lại.</p>'+
+        '<p class="lede">Dẫn bạn qua cả buổi: khởi động → 6 động tác × số vòng. Mỗi bài có hình tự minh họa; tự bấm giờ cho plank & leo núi, chạm màn hình đếm số lần cho các bài còn lại.</p>'+
         '<div class="setrow"><span class="setlbl">Số vòng</span><div class="segs">'+[2,3,4].map(function(n){return seg('rounds',n,S.cfg.rounds);}).join('')+'</div></div>'+
         '<div class="setrow"><span class="setlbl">Nghỉ giữa vòng</span><div class="segs">'+[60,75,90].map(function(n){return seg('rest',n,S.cfg.rest,'s');}).join('')+'</div></div>'+
         '<button class="btn primary big" data-action="start">Bắt đầu buổi tập ▶</button>'+
@@ -271,13 +346,14 @@
         '<p class="taphint">Chạm vào vòng tròn để đếm +1</p>'+
         '<div class="ctrls"><button class="btn ghost" data-action="minus">−1</button>'+
         '<button class="btn primary" id="nextbtn" data-action="next">Xong →</button></div>'+
-        '<button class="btn text" data-action="skip">Bỏ qua động tác này</button></div>';
+        '<button class="btn text" data-action="skip">Bỏ qua động tác này</button>'+mwLink(ex.mw)+'</div>';
     }
     return head+ring(1,ex.sec+'s','mục tiêu '+ex.sec+'s')+
       '<div class="ctrls"><button class="btn ghost" data-action="pause">'+(S.paused?'Tiếp tục':'Tạm dừng')+'</button>'+
-      '<button class="btn primary" data-action="skip">Bỏ qua →</button></div></div>';
+      '<button class="btn primary" data-action="skip">Bỏ qua →</button></div>'+mwLink(ex.mw)+'</div>';
   }
-  function render(){ document.getElementById('head').innerHTML=headHTML(); document.getElementById('stage').innerHTML=stageHTML(); }
+  function render(){ document.getElementById('head').innerHTML=headHTML(); document.getElementById('stage').innerHTML=stageHTML();
+    if(window.hydrateFigures){ window.hydrateFigures(); } }
 
   // ---- events ----
   app.addEventListener('click',function(e){
@@ -298,5 +374,3 @@
   render();
 })();
 </script>
-</body>
-</html>
